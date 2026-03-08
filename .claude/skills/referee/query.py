@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Referee 查询命令行工具
+Referee 查询命令行工具 - 纯检索版本
+用于 Claude Code skill，由 Claude 直接处理查询结果
 """
 import sys
 import argparse
+import json
 from pathlib import Path
-from typing import Optional
-import anthropic
 
 # 添加当前目录到 Python 路径
 sys.path.insert(0, str(Path(__file__).parent))
@@ -17,113 +17,121 @@ from vectorstore import RefereeVectorStore
 class RefereeQuery:
     """裁判系统协议查询器"""
 
-    def __init__(self, api_key: Optional[str] = None):
+    def __init__(self):
         self.store = RefereeVectorStore()
 
-        # 初始化 Claude API（如果提供了 API key）
-        self.client = None
-        if api_key:
-            self.client = anthropic.Anthropic(api_key=api_key)
-
-    def query(self, query_text: str, use_ai: bool = True, n_results: int = 3):
+    def query(self, query_text: str, n_results: int = 3, output_format: str = 'text'):
         """执行查询"""
-        print(f"\n🔍 查询: {query_text}\n")
-
         # 检查是否是命令码查询
         if query_text.strip().upper().startswith('0X') or \
            (len(query_text.strip()) == 6 and query_text.strip()[0] == '0'):
-            return self._query_cmd_id(query_text.strip())
+            return self._query_cmd_id(query_text.strip(), output_format)
 
         # 向量检索
         results = self.store.query(query_text, n_results=n_results)
 
         if not results:
-            print("❌ 未找到相关内容")
+            if output_format == 'json':
+                print(json.dumps({'error': '未找到相关内容', 'results': []}, ensure_ascii=False))
+            else:
+                print("❌ 未找到相关内容")
             return
 
-        # 如果启用 AI 且有 API key，使用 Claude 生成回答
-        if use_ai and self.client:
-            self._ai_answer(query_text, results)
+        # 输出结果
+        if output_format == 'json':
+            self._output_json(results)
         else:
-            self._simple_answer(results)
+            self._output_text(query_text, results)
 
-    def _query_cmd_id(self, cmd_id: str):
+    def _query_cmd_id(self, cmd_id: str, output_format: str):
         """精确查询命令码"""
         result = self.store.query_by_cmd_id(cmd_id)
 
         if not result:
-            print(f"❌ 未找到命令码 {cmd_id}")
+            if output_format == 'json':
+                print(json.dumps({'error': f'未找到命令码 {cmd_id}', 'results': []}, ensure_ascii=False))
+            else:
+                print(f"❌ 未找到命令码 {cmd_id}")
             return
 
-        print(f"📋 命令码: {result['metadata']['cmd_id']}")
-        print(f"📝 描述: {result['metadata']['description']}")
-        print(f"📏 数据长度: {result['metadata']['data_length']} 字节")
-        print(f"📡 链路类型: {result['metadata']['link_type']}")
-        print(f"🔄 发送方/接收方: {result['metadata']['sender_receiver']}")
-        print(f"\n{'='*60}\n")
-        print(result['content'])
+        if output_format == 'json':
+            self._output_json([result])
+        else:
+            print(f"\n📋 命令码: {result['metadata']['cmd_id']}")
+            print(f"📝 描述: {result['metadata']['description']}")
+            print(f"📏 数据长度: {result['metadata']['data_length']} 字节")
+            print(f"📡 链路类型: {result['metadata']['link_type']}")
+            print(f"🔄 发送方/接收方: {result['metadata']['sender_receiver']}")
+            print(f"\n{'='*60}\n")
+            print(result['content'])
 
-    def _simple_answer(self, results):
-        """简单输出检索结果"""
+    def _output_text(self, query_text: str, results):
+        """文本格式输出"""
+        print(f"\n🔍 查询: {query_text}")
+        print(f"📊 找到 {len(results)} 个相关结果\n")
+
         for i, result in enumerate(results, 1):
             print(f"{'='*60}")
-            print(f"结果 {i} - {result['metadata'].get('cmd_id', result['metadata'].get('title', 'N/A'))}")
-            print(f"类型: {result['metadata']['type']}")
-            if result['metadata']['type'] == 'command_code':
-                print(f"描述: {result['metadata']['description']}")
-            print(f"{'='*60}\n")
-            print(result['content'][:500])  # 只显示前 500 字符
-            print("\n")
-
-    def _ai_answer(self, query_text: str, results):
-        """使用 Claude AI 生成回答"""
-        # 构建上下文
-        context = "\n\n---\n\n".join([
-            f"[来源: {r['metadata'].get('cmd_id', r['metadata'].get('title', 'N/A'))}]\n{r['content']}"
-            for r in results
-        ])
-
-        prompt = f"""你是 RoboMaster 裁判系统协议专家。基于以下协议文档内容回答用户问题。
-
-用户问题: {query_text}
-
-相关协议内容:
-{context}
-
-请提供准确、详细的回答。如果涉及命令码，请说明其用途、数据格式和使用场景。"""
-
-        print("🤖 AI 正在分析...\n")
-
-        try:
-            message = self.client.messages.create(
-                model="claude-opus-4-6",
-                max_tokens=2000,
-                messages=[{"role": "user", "content": prompt}]
-            )
-
-            answer = message.content[0].text
+            print(f"结果 {i}")
             print(f"{'='*60}")
-            print("AI 回答:")
-            print(f"{'='*60}\n")
-            print(answer)
-            print(f"\n{'='*60}")
-            print(f"参考来源: {', '.join([r['metadata'].get('cmd_id', r['chunk_id']) for r in results])}")
 
-        except Exception as e:
-            print(f"❌ AI 查询失败: {e}")
-            print("\n降级到简单输出模式:\n")
-            self._simple_answer(results)
+            metadata = result['metadata']
+            print(f"类型: {metadata['type']}")
 
-    def list_commands(self):
+            if metadata['type'] == 'command_code':
+                print(f"命令码: {metadata['cmd_id']}")
+                print(f"描述: {metadata['description']}")
+                print(f"数据长度: {metadata['data_length']} 字节")
+                print(f"链路: {metadata['link_type']}")
+            elif metadata['type'] == 'section':
+                print(f"章节: {metadata['title']}")
+            elif metadata['type'] == 'custom_protocol':
+                print(f"协议: {metadata['protocol_name']}")
+
+            print(f"\n{result['content'][:800]}")  # 显示前 800 字符
+            if len(result['content']) > 800:
+                print("\n... (内容已截断)")
+            print()
+
+    def _output_json(self, results):
+        """JSON 格式输出"""
+        output = {
+            'total': len(results),
+            'results': [
+                {
+                    'chunk_id': r['chunk_id'],
+                    'content': r['content'],
+                    'metadata': r['metadata'],
+                    'distance': r.get('distance')
+                }
+                for r in results
+            ]
+        }
+        print(json.dumps(output, ensure_ascii=False, indent=2))
+
+    def list_commands(self, output_format: str = 'text'):
         """列出所有命令码"""
         cmd_ids = self.store.list_all_cmd_ids()
-        print(f"\n📋 共有 {len(cmd_ids)} 个命令码:\n")
 
-        for cmd_id in cmd_ids:
-            result = self.store.query_by_cmd_id(cmd_id)
-            if result:
-                desc = result['metadata']['description'][:50]
-                print(f"  {cmd_id}: {desc}...")
+        if output_format == 'json':
+            commands = []
+            for cmd_id in cmd_ids:
+                result = self.store.query_by_cmd_id(cmd_id)
+                if result:
+                    commands.append({
+                        'cmd_id': cmd_id,
+                        'description': result['metadata']['description'],
+                        'data_length': result['metadata']['data_length'],
+                        'link_type': result['metadata']['link_type']
+                    })
+            print(json.dumps({'total': len(commands), 'commands': commands}, ensure_ascii=False, indent=2))
+        else:
+            print(f"\n📋 共有 {len(cmd_ids)} 个命令码:\n")
+            for cmd_id in cmd_ids:
+                result = self.store.query_by_cmd_id(cmd_id)
+                if result:
+                    desc = result['metadata']['description'][:50]
+                    print(f"  {cmd_id}: {desc}...")
 
     def stats(self):
         """显示数据库统计"""
@@ -137,7 +145,7 @@ class RefereeQuery:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="RoboMaster 裁判系统协议查询工具"
+        description="RoboMaster 裁判系统协议查询工具（纯检索版本）"
     )
     parser.add_argument(
         'query',
@@ -155,13 +163,9 @@ def main():
         help='显示知识库统计'
     )
     parser.add_argument(
-        '--no-ai',
+        '--json',
         action='store_true',
-        help='禁用 AI 回答，仅显示检索结果'
-    )
-    parser.add_argument(
-        '--api-key',
-        help='Claude API Key（可选，用于 AI 回答）'
+        help='以 JSON 格式输出（用于程序化处理）'
     )
     parser.add_argument(
         '-n',
@@ -173,21 +177,16 @@ def main():
 
     args = parser.parse_args()
 
-    # 从环境变量获取 API key
-    api_key = args.api_key
-    if not api_key:
-        import os
-        api_key = os.getenv('ANTHROPIC_API_KEY')
-
-    querier = RefereeQuery(api_key=api_key if not args.no_ai else None)
+    querier = RefereeQuery()
+    output_format = 'json' if args.json else 'text'
 
     if args.list:
-        querier.list_commands()
+        querier.list_commands(output_format)
     elif args.stats:
         querier.stats()
     elif args.query:
         query_text = ' '.join(args.query)
-        querier.query(query_text, use_ai=not args.no_ai, n_results=args.num_results)
+        querier.query(query_text, n_results=args.num_results, output_format=output_format)
     else:
         parser.print_help()
 
