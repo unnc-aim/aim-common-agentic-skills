@@ -1,6 +1,6 @@
 {
   "document": "/Users/LijieZhou/Downloads/RoboMaster 2026 机甲大师高校系列赛通信协议 V1.2.0（20260209）/RoboMaster 2026 机甲大师高校系列赛通信协议 V1.2.0（20260209）.md",
-  "total_chunks": 104,
+  "total_chunks": 123,
   "chunks": [
     {
       "chunk_id": "cmd_0X0001",
@@ -247,6 +247,272 @@
         "sender_receiver": "服务器→己方雷达机器人",
         "link_type": "常规链路",
         "section": "串口协议"
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0301",
+      "content": "命令码: 0X0301\n数据长度: 118 字节\n描述: 机器人交互数据，发送方触发发送，频率上限为 30Hz\n发送方/接收方: -\n数据链路: 常规链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0301",
+        "data_length": "118",
+        "description": "机器人交互数据，发送方触发发送，频率上限为 30Hz",
+        "sender_receiver": "-",
+        "link_type": "常规链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0302",
+      "content": "命令码: 0X0302\n数据长度: 30 字节\n描述: 自定义控制器与机器人交互数 据，发送方触发发送，频率上限为 30Hz\n发送方/接收方: 自定义控制器→选手端图传连接的机器人\n数据链路: 图传链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0302",
+        "data_length": "30",
+        "description": "自定义控制器与机器人交互数 据，发送方触发发送，频率上限为 30Hz",
+        "sender_receiver": "自定义控制器→选手端图传连接的机器人",
+        "link_type": "图传链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0303",
+      "content": "命令码: 0X0303\n数据长度: 15 字节\n描述: 选手端小地图交互数据，选手端触发发送\n发送方/接收方: 选手端点击→服务器→发送方选择的己方机器人\n数据链路: 常规链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0303",
+        "data_length": "15",
+        "description": "选手端小地图交互数据，选手端触发发送",
+        "sender_receiver": "选手端点击→服务器→发送方选择的己方机器人",
+        "link_type": "常规链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0305",
+      "content": "命令码: 0X0305\n数据长度: 24 字节\n描述: 选手端小地图接收雷达数据，频率上限为 5Hz\n发送方/接收方: 雷达→服务器→己方所有选手端\n数据链路: 常规链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0305",
+        "data_length": "24",
+        "description": "选手端小地图接收雷达数据，频率上限为 5Hz",
+        "sender_receiver": "雷达→服务器→己方所有选手端",
+        "link_type": "常规链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0306",
+      "content": "命令码: 0X0306\n数据长度: 8 字节\n描述: 自定义控制器与选手端交互数 据，发送方触发发送，频率上限为 30Hz\n发送方/接收方: 自定义控制器→选手端\n数据链路: -\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0306",
+        "data_length": "8",
+        "description": "自定义控制器与选手端交互数 据，发送方触发发送，频率上限为 30Hz",
+        "sender_receiver": "自定义控制器→选手端",
+        "link_type": "-",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0307",
+      "content": "命令码: 0X0307\n数据长度: 103 字节\n描述: 选手端小地图接收路径数据，频率上限为 1Hz\n发送方/接收方: 哨兵/半自动控制机器人→对应操作手选手端\n数据链路: 常规链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0307",
+        "data_length": "103",
+        "description": "选手端小地图接收路径数据，频率上限为 1Hz",
+        "sender_receiver": "哨兵/半自动控制机器人→对应操作手选手端",
+        "link_type": "常规链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0308",
+      "content": "命令码: 0X0308\n数据长度: 34 字节\n描述: 选手端小地图接收机器人数据，频率上限为 3Hz\n发送方/接收方: 己方机器人→己方选手端\n数据链路: 常规链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0308",
+        "data_length": "34",
+        "description": "选手端小地图接收机器人数据，频率上限为 3Hz",
+        "sender_receiver": "己方机器人→己方选手端",
+        "link_type": "常规链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0309",
+      "content": "命令码: 0X0309\n数据长度: 30 字节\n描述: 自定义控制器接收机器人数据，频率上限为 10Hz\n发送方/接收方: 己方机器人→对应操作手选手端连接的自定义控制器\n数据链路: 图传链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0309",
+        "data_length": "30",
+        "description": "自定义控制器接收机器人数据，频率上限为 10Hz",
+        "sender_receiver": "己方机器人→对应操作手选手端连接的自定义控制器",
+        "link_type": "图传链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0310",
+      "content": "命令码: 0X0310\n数据长度: 300 字节\n描述: 机器人发送给自定义客户端的数据，频率上限为 50Hz\n发送方/接收方: 己方机器人→图传链路→对应操作手选手端连接的自定义客户端\n数据链路: 图传链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0310",
+        "data_length": "300",
+        "description": "机器人发送给自定义客户端的数据，频率上限为 50Hz",
+        "sender_receiver": "己方机器人→图传链路→对应操作手选手端连接的自定义客户端",
+        "link_type": "图传链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0311",
+      "content": "命令码: 0X0311\n数据长度: 30 字节\n描述: 自定义客户端发送给机器人的自定义指令，频率上限为 75Hz\n发送方/接收方: 对应操作手选手端连接的自定义客户端→图传链路→己方机器人\n数据链路: 图传链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0311",
+        "data_length": "30",
+        "description": "自定义客户端发送给机器人的自定义指令，频率上限为 75Hz",
+        "sender_receiver": "对应操作手选手端连接的自定义客户端→图传链路→己方机器人",
+        "link_type": "图传链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0A01",
+      "content": "命令码: 0X0A01\n数据长度: 24 字节\n描述: 对方机器人的位置坐标，频率上限为 10Hz\n发送方/接收方: 信号发射源→雷达\n数据链路: 雷达无线链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0A01",
+        "data_length": "24",
+        "description": "对方机器人的位置坐标，频率上限为 10Hz",
+        "sender_receiver": "信号发射源→雷达",
+        "link_type": "雷达无线链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0A02",
+      "content": "命令码: 0X0A02\n数据长度: 12 字节\n描述: 对方机器人的血量信息，频率上限为 10Hz\n发送方/接收方: 信号发射源→雷达\n数据链路: 雷达无线链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0A02",
+        "data_length": "12",
+        "description": "对方机器人的血量信息，频率上限为 10Hz",
+        "sender_receiver": "信号发射源→雷达",
+        "link_type": "雷达无线链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0A03",
+      "content": "命令码: 0X0A03\n数据长度: 10 字节\n描述: 对方机器人的剩余发弹量信息，频率上限为 10Hz\n发送方/接收方: 信号发射源→雷达\n数据链路: 雷达无线链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0A03",
+        "data_length": "10",
+        "description": "对方机器人的剩余发弹量信息，频率上限为 10Hz",
+        "sender_receiver": "信号发射源→雷达",
+        "link_type": "雷达无线链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0A04",
+      "content": "命令码: 0X0A04\n数据长度: 8 字节\n描述: 对方队伍的宏观状态信息，频率上限为 10Hz\n发送方/接收方: 信号发射源→雷达\n数据链路: 雷达无线链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0A04",
+        "data_length": "8",
+        "description": "对方队伍的宏观状态信息，频率上限为 10Hz",
+        "sender_receiver": "信号发射源→雷达",
+        "link_type": "雷达无线链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0A05",
+      "content": "命令码: 0X0A05\n数据长度: 36 字节\n描述: 对方各机器人当前增益效果，频率上限为 10Hz\n发送方/接收方: 信号发射源→雷达\n数据链路: 雷达无线链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0A05",
+        "data_length": "36",
+        "description": "对方各机器人当前增益效果，频率上限为 10Hz",
+        "sender_receiver": "信号发射源→雷达",
+        "link_type": "雷达无线链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0A06",
+      "content": "命令码: 0X0A06\n数据长度: 6 字节\n描述: 对方干扰波密钥，频率上限为 10Hz\n发送方/接收方: 信号发射源→雷达\n数据链路: 雷达无线链路\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0A06",
+        "data_length": "6",
+        "description": "对方干扰波密钥，频率上限为 10Hz",
+        "sender_receiver": "信号发射源→雷达",
+        "link_type": "雷达无线链路",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0100",
+      "content": "命令码: 0X0100\n数据长度: 2 字节\n描述: 选手端删除图层\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0100",
+        "data_length": "2",
+        "description": "选手端删除图层",
+        "sender_receiver": "",
+        "link_type": "",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0102",
+      "content": "命令码: 0X0102\n数据长度: 30 字节\n描述: 选手端绘制两个图形\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0102",
+        "data_length": "30",
+        "description": "选手端绘制两个图形",
+        "sender_receiver": "",
+        "link_type": "",
+        "section": "串口协议",
+        "has_detail_table": false
+      }
+    },
+    {
+      "chunk_id": "cmd_0X0103",
+      "content": "命令码: 0X0103\n数据长度: 75 字节\n描述: 选手端绘制五个图形\n",
+      "metadata": {
+        "type": "command_code",
+        "cmd_id": "0X0103",
+        "data_length": "75",
+        "description": "选手端绘制五个图形",
+        "sender_receiver": "",
+        "link_type": "",
+        "section": "串口协议",
+        "has_detail_table": false
       }
     },
     {

@@ -65,6 +65,8 @@ class ProtocolDocumentSlicer:
                 }
 
         # 第二步：为每个命令码查找对应的详细表格
+        processed_cmds = set()
+
         for i, line in enumerate(self.lines):
             match = table_pattern.match(line.strip())
             if match:
@@ -108,6 +110,35 @@ class ProtocolDocumentSlicer:
                         'sender_receiver': cmd_info[cmd_id]['sender_receiver'],
                         'link_type': cmd_info[cmd_id]['link_type'],
                         'section': '串口协议'
+                    },
+                    chunk_id=f"cmd_{cmd_id}"
+                )
+                self.chunks.append(chunk)
+                processed_cmds.add(cmd_id)
+
+        # 第三步：为没有详细表格的命令码生成基本切片
+        for cmd_id, info in cmd_info.items():
+            if cmd_id not in processed_cmds:
+                # 生成基本信息切片
+                chunk_content = f"命令码: {cmd_id}\n"
+                chunk_content += f"数据长度: {info['data_length']} 字节\n"
+                chunk_content += f"描述: {info['description']}\n"
+                if info['sender_receiver']:
+                    chunk_content += f"发送方/接收方: {info['sender_receiver']}\n"
+                if info['link_type']:
+                    chunk_content += f"数据链路: {info['link_type']}\n"
+
+                chunk = DocumentChunk(
+                    content=chunk_content,
+                    metadata={
+                        'type': 'command_code',
+                        'cmd_id': cmd_id,
+                        'data_length': info['data_length'],
+                        'description': info['description'],
+                        'sender_receiver': info['sender_receiver'],
+                        'link_type': info['link_type'],
+                        'section': '串口协议',
+                        'has_detail_table': False
                     },
                     chunk_id=f"cmd_{cmd_id}"
                 )
