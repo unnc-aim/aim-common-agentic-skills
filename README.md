@@ -2,6 +2,19 @@
 
 精选的 Claude Code skills 集合，用于增强 AI 辅助开发体验。
 
+## 🚀 快速安装
+
+```bash
+# 克隆仓库
+git clone https://github.com/unnc-aim/claude-skills.git
+cd claude-skills
+
+# 一键安装所有 skills
+./install.sh
+```
+
+安装后，所有 skills 将被复制到 `~/.claude/skills/`，可以在 Claude Code 中直接使用。
+
 ## 📦 Skills 列表
 
 ### 1. Remote Exec - 远程 SSH 执行
@@ -18,13 +31,13 @@
 **快速开始：**
 ```bash
 # 添加远程主机
-.claude/skills/remote-exec/remote-exec.sh add dev user@dev-server.com
+~/.claude/skills/remote-exec/remote-exec.sh add dev user@dev-server.com
 
 # 连接
-.claude/skills/remote-exec/remote-exec.sh connect dev
+~/.claude/skills/remote-exec/remote-exec.sh connect dev
 
 # 执行命令
-.claude/skills/remote-exec/remote-exec.sh exec whoami
+~/.claude/skills/remote-exec/remote-exec.sh exec whoami
 ```
 
 [查看详细文档 →](.claude/skills/remote-exec/README.md)
@@ -33,21 +46,25 @@
 
 ### 2. Referee - RoboMaster 协议查询
 
-RoboMaster 裁判系统通信协议智能查询工具，基于 RAG 技术。
+RoboMaster 裁判系统通信协议智能查询工具，**零依赖，即开即用**。
 
 **特性：**
 - 🎯 精确文档切片（104 个结构化切片）
-- 🔍 向量语义搜索
+- 🔍 关键词智能匹配
 - ⚡ 毫秒级查询响应
-- 🤖 AI 增强回答（Claude Opus 4.6）
-- 📊 元数据过滤和反向查询
+- 💡 零依赖（纯 Python 标准库）
+- 📚 支持添加新文档
 
 **快速开始：**
 ```bash
-# 安装依赖
-pip3 install chromadb anthropic
+# 无需安装任何依赖，直接使用！
+python3 ~/.claude/skills/referee/query_simple.py "如何获取机器人血量"
+python3 ~/.claude/skills/referee/query_simple.py 0x0003
+python3 ~/.claude/skills/referee/query_simple.py --list
 
-# 初始化知识库
+# 添加新文档到知识库
+python3 ~/.claude/skills/referee/add_document.py add <文档路径> --name <文档名>
+```
 cd .claude/skills/referee
 python3 vectorstore.py chunks.json
 
