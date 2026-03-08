@@ -1,6 +1,6 @@
 # Referee Skill
 
-RoboMaster 裁判系统通信协议智能查询 skill。基于 RAG（检索增强生成）技术，提供向量语义搜索，由 Claude Code 直接处理查询结果。
+RoboMaster 裁判系统通信协议智能查询 skill。**零依赖，即开即用**。
 
 ## Trigger
 
@@ -13,81 +13,75 @@ RoboMaster 裁判系统通信协议智能查询 skill。基于 RAG（检索增�
 ## Capabilities
 
 1. **智能文档切片** - 按命令码、章节、协议类型精确切分（104 个切片）
-2. **向量语义搜索** - 支持模糊匹配和自然语言查询
+2. **关键词智能匹配** - 基于评分算法的快速检索
 3. **命令码精确查找** - 通过命令码 ID 快速定位
-4. **元数据过滤** - 支持按类型、链路、发送方等反向查询
-5. **JSON 输出** - 支持程序化处理
+4. **零依赖** - 纯 Python 标准库，无需安装任何包
+5. **即开即用** - 无需初始化，直接查询
 
 ## Setup
 
-### 首次使用
+**无需任何设置！** 直接使用即可。
 
-1. 安装依赖：
-```bash
-pip3 install chromadb
-```
-
-2. 初始化知识库：
-```bash
-cd .claude/skills/referee
-python3 vectorstore.py chunks.json
-```
-
-这将：
-- 加载预生成的 104 个文档切片
-- 向量化并存储到本地数据库（~30 秒）
-- 创建 vectorstore/ 目录
+所有数据已预生成在 `chunks.json` 文件中（152KB）。
 
 ## Usage in Claude Code
 
-当 skill 被激活时，Claude 应该：
+当 skill 被激活时（用户使用 `/referee` 或询问协议相关问题），Claude 应该：
 
 ### 1. 执行查询获取相关内容
 
+**重要：使用 `query_simple.py`，不是 `query.py`！**
+
 ```bash
 # 自然语言查询
-python3 .claude/skills/referee/query.py "如何获取机器人血量"
+python3 ~/.claude/skills/referee/query_simple.py "如何获取机器人血量"
 
 # 命令码精确查询
-python3 .claude/skills/referee/query.py 0x0003
+python3 ~/.claude/skills/referee/query_simple.py 0x0003
 
 # 列出所有命令码
-python3 .claude/skills/referee/query.py --list
+python3 ~/.claude/skills/referee/query_simple.py --list
 
 # JSON 格式输出（用于程序化处理）
-python3 .claude/skills/referee/query.py --json "图传链路波特率"
+python3 ~/.claude/skills/referee/query_simple.py --json "图传链路波特率"
 ```
 
-### 2. 分析检索结果
+### 2. 后处理和精准回答
 
-查询工具会返回相关的文档切片，包含：
-- 命令码的完整数据格式
-- 章节的详细说明
-- 自定义协议的定义
+查询工具返回相关切片后，Claude 需要：
+- **理解用户真正的需求**
+- **从多个结果中提取关键信息**
+- **简化并精准地回答**
+- **提供使用示例和建议**
 
-### 3. 生成回答
+### 3. 回答示例
 
-基于检索到的内容，Claude 直接：
-- 理解用户问题
-- 分析相关切片
-- 生成准确、详细的回答
-- 引用来源（命令码、章节等）
+**用户问:** `/referee 如何获取机器人血量？`
 
-### 4. 提供后续建议
+**Claude 执行:**
+```bash
+python3 ~/.claude/skills/referee/query_simple.py "如何获取机器人血量"
+```
 
-- 相关命令码
-- 相关章节
-- 使用示例
+**工具返回:** 命令码 0x0003 的完整定义（包含数据格式表格）
+
+**Claude 回答:**
+"要获取机器人血量，使用命令码 **0x0003**。该命令以 3Hz 频率发送，包含：
+- 己方各机器人血量（每个 2 字节）
+- 前哨站血量（2 字节）
+- 基地血量（2 字节）
+
+注意：若机器人未上场或被罚下，血量为 0。"
 
 ## Examples
 
 ### 示例 1: 查询命令码
 
-**用户:** 0x0201 是什么命令？
+**用户:** `/referee 0x0201 是什么命令？`
 
 **Claude 执行:**
 ```bash
-python3 .claude/skills/referee/query.py 0x0201
+python3 ~/.claude/skills/referee/query_simple.py 0x0201
 ```
 
 **输出:**
@@ -98,9 +92,6 @@ python3 .claude/skills/referee/query.py 0x0201
 📡 链路类型: 常规链路
 🔄 发送方/接收方: 主控模块→对应机器人
 
-============================================================
-
-表 1-11 0x0201
 [详细数据格式表格...]
 ```
 
@@ -109,66 +100,49 @@ python3 .claude/skills/referee/query.py 0x0201
 
 ### 示例 2: 自然语言查询
 
-**用户:** 如何获取机器人的实时位置？
+**用户:** `/referee 图传链路的波特率是多少`
 
 **Claude 执行:**
 ```bash
-python3 .claude/skills/referee/query.py "如何获取机器人的实时位置"
+python3 ~/.claude/skills/referee/query_simple.py "图传链路波特率"
 ```
 
 **输出:**
 ```
-🔍 查询: 如何获取机器人的实时位置
+🔍 查询: 图传链路波特率
 📊 找到 3 个相关结果
 
-============================================================
-结果 1
-============================================================
-类型: command_code
-命令码: 0X0203
-描述: 机器人位置数据，固定以 1Hz 频率发送
-数据长度: 16 字节
-链路: 常规链路
-
-表 1-13 0x0203
-[位置数据格式...]
+[包含串口协议格式章节，说明图传链路波特率为 921600]
 ```
 
 **Claude 回答:**
-"要获取机器人实时位置，使用命令码 0x0203。该命令以 1Hz 频率发送，包含：
-- x 坐标（4 字节，单位：米）
-- y 坐标（4 字节，单位：米）
-- 朝向角度（4 字节，单位：度，正北为 0 度）
+"图传链路的波特率为 **921600**。
 
-这是通过主控模块发送到对应机器人的常规链路数据。"
+根据协议文档，裁判系统串口有三种数据链路：
+- 常规链路：波特率 115200
+- 图传链路：波特率 921600 ← 你询问的
+- 雷达无线链路：通过电磁波传输
 
-### 示例 3: JSON 格式（程序化处理）
+图传链路由裁判系统选手端和图传模块进行数据转发。"
+
+### 示例 3: 列出所有命令码
+
+**用户:** `/referee 列出所有命令码`
 
 **Claude 执行:**
 ```bash
-python3 .claude/skills/referee/query.py --json "射击数据"
+python3 ~/.claude/skills/referee/query_simple.py --list
 ```
 
 **输出:**
-```json
-{
-  "total": 2,
-  "results": [
-    {
-      "chunk_id": "cmd_0X0207",
-      "content": "...",
-      "metadata": {
-        "type": "command_code",
-        "cmd_id": "0X0207",
-        "description": "实时射击数据",
-        ...
-      }
-    }
-  ]
-}
 ```
+📋 共有 19 个命令码:
 
-Claude 可以解析 JSON 并提取关键信息。
+  0X0001: 比赛状态数据，固定以 1Hz 频率发送...
+  0X0002: 比赛结果数据，比赛结束触发发送...
+  0X0003: 机器人血量数据，固定以 3Hz 频率发送...
+  ...
+```
 
 ## Document Structure
 
@@ -189,7 +163,7 @@ Claude 可以解析 JSON 并提取关键信息。
 ## Command Line Options
 
 ```bash
-python3 query.py [选项] <查询内容>
+python3 query_simple.py [选项] <查询内容>
 
 选项:
   --list              列出所有命令码
@@ -207,7 +181,7 @@ python3 query.py [选项] <查询内容>
     ↓
 Claude Code (你)
     ↓
-query.py (向量检索)
+query_simple.py (关键词检索)
     ↓
 返回相关切片
     ↓
@@ -217,74 +191,47 @@ Claude Code (分析和回答)
 ```
 
 **优势：**
-- ✅ 无需额外 API 调用
-- ✅ 无额外成本
-- ✅ 利用 Claude Code 的上下文理解能力
+- ✅ 无需额外依赖
+- ✅ 无需下载模型
+- ✅ 无初始化时间
+- ✅ 利用 Claude Code 的语义理解能力
 - ✅ 更灵活的回答方式
-- ✅ 可以结合其他工具和代码
-
-### 切片策略
-
-1. **命令码切片**
-   - 识别命令码表格行（`| 0x0001 | ...`）
-   - 查找对应的数据格式表格（`表 1-5 0x0001`）
-   - 提取完整的表格和相关说明
-   - 生成元数据（命令码、长度、描述等）
-
-2. **章节切片**
-   - 按 Markdown 标题层级（#, ##, ###）分割
-   - 跳过纯图片章节
-   - 保留上下文信息
-
-3. **自定义协议切片**
-   - 提取 "自定义客户端协议" 章节
-   - 按 ### 子章节分割
-   - 保留完整的协议定义
-
-### 向量化
-
-- 使用 ChromaDB 作为向量数据库
-- 默认使用 sentence-transformers 嵌入模型
-- 支持元数据过滤和混合检索
 
 ### 查询流程
 
-1. 用户输入 → 向量化
-2. 相似度搜索 → 检索 top-k 切片
+1. 用户输入 → 关键词提取
+2. 评分匹配 → 检索 top-k 切片
 3. 返回结构化结果
 4. Claude Code 分析并生成回答
 
 ## Performance
 
-- **初始化**: ~30 秒（一次性）
-- **查询延迟**: <100ms（向量检索）
-- **存储空间**: ~10MB（向量数据库）
-
-## Limitations
-
-- 知识库是静态的，仅包含初始化时的协议文档
-- 需要手动重新初始化以更新协议版本
-- 向量搜索质量依赖于嵌入模型
+- **启动时间**: <100ms（无需初始化）
+- **查询延迟**: <50ms（纯内存操作）
+- **存储空间**: 152KB（仅 chunks.json）
+- **依赖**: 0（纯 Python 标准库）
 
 ## Troubleshooting
 
-### 知识库未初始化
+### 问题：找不到 query_simple.py
 
+**解决：**
 ```bash
-cd .claude/skills/referee
-python3 vectorstore.py chunks.json
+# 运行安装脚本
+./install.sh
+
+# 或手动复制
+cp .claude/skills/referee/query_simple.py ~/.claude/skills/referee/
+cp .claude/skills/referee/chunks.json ~/.claude/skills/referee/
 ```
 
-### 依赖缺失
+### 问题：查询结果不准确
 
-```bash
-pip3 install chromadb
-```
-
-### 协议文档路径错误
-
-编辑 `init.sh`，修改 `PROTOCOL_DOC` 变量
+**解决：**
+1. 增加返回结果数：`-n 5`
+2. 使用更具体的查询词
+3. 直接使用命令码查询
 
 ## allowed-tools
 
-- `Bash(*)` - 执行查询脚本和初始化命令
+- `Bash(*)` - 执行查询脚本
