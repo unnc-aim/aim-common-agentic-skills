@@ -9,6 +9,13 @@ import sys
 from pathlib import Path
 from typing import List, Dict, Any
 
+# 导入计数器
+try:
+    from query_counter import check_and_suggest
+    HAS_COUNTER = True
+except ImportError:
+    HAS_COUNTER = False
+
 
 class SimpleRefereeQuery:
     """简单的协议查询器 - 基于关键词匹配"""
@@ -227,8 +234,19 @@ def main():
         default=3,
         help='返回结果数量（默认 3）'
     )
+    parser.add_argument(
+        '-f',
+        '--force',
+        action='store_true',
+        help='强制查询（忽略查询次数限制）'
+    )
 
     args = parser.parse_args()
+
+    # 检查查询次数（仅对实际查询操作）
+    if args.query and not args.list and not args.stats and HAS_COUNTER:
+        if not check_and_suggest(force=args.force):
+            sys.exit(0)
 
     try:
         querier = SimpleRefereeQuery()
