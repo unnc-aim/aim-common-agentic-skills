@@ -1,0 +1,21 @@
+{
+  "hosts": {
+    "dev": {
+      "address": "user@dev-server.example.com",
+      "port": 22
+    },
+    "staging": {
+      "address": "deploy@staging.example.com",
+      "port": 2222
+    },
+    "prod": {
+      "address": "admin@prod-server.example.com",
+      "port": 22
+    },
+    "local-vm": {
+      "address": "vagrant@192.168.56.10",
+      "port": 22
+    }
+  },
+  "active": "dev"
+}
