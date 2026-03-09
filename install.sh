@@ -48,6 +48,20 @@ chmod +x "$REFEREE_DIR/query_simple.py"
 
 echo "   ✓ Referee 已安装到: $REFEREE_DIR"
 
+# 安装 Feishu Notify Skill
+echo ""
+echo "📦 安装 Feishu Notify Skill..."
+FEISHU_DIR="$USER_CLAUDE_DIR/feishu-notify"
+mkdir -p "$FEISHU_DIR"
+
+cp "$REPO_DIR/.claude/skills/feishu-notify/feishu-notify.sh" "$FEISHU_DIR/"
+cp "$REPO_DIR/.claude/skills/feishu-notify/SKILL.md" "$FEISHU_DIR/"
+cp "$REPO_DIR/.claude/skills/feishu-notify/README.md" "$FEISHU_DIR/"
+
+chmod +x "$FEISHU_DIR/feishu-notify.sh"
+
+echo "   ✓ Feishu Notify 已安装到: $FEISHU_DIR"
+
 echo ""
 echo "✅ 所有 skills 安装完成！"
 echo ""
@@ -76,6 +90,19 @@ echo "   添加新文档:"
 echo "     python3 $REFEREE_DIR/add_document.py add <文档路径> --name <文档名>"
 echo ""
 fi
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "📚 Feishu Notify Skill"
+echo "   飞书 Webhook 通知工具"
+echo ""
+echo "   配置 Webhook URL（安装后必须手动配置）:"
+echo "     $FEISHU_DIR/feishu-notify.sh config <webhook_url>"
+echo ""
+echo "   使用方法:"
+echo "     $FEISHU_DIR/feishu-notify.sh send \"标题\" \"内容\""
+echo "     $FEISHU_DIR/feishu-notify.sh test"
+echo "     $FEISHU_DIR/feishu-notify.sh status"
+echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 echo "💡 提示: 所有 skills 均已安装到 $USER_CLAUDE_DIR"
