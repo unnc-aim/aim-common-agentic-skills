@@ -78,6 +78,32 @@ python3 query.py --list
 
 ---
 
+### 3. Feishu Notify - 飞书 Webhook 通知
+
+任务完成后自动向飞书发送通知，让你随时掌握 Claude Code 的工作进展。
+
+**特性：**
+- 📨 飞书 Webhook 推送通知
+- 🤖 Claude 自动生成通知内容（title + body）
+- ⚡ 零依赖（纯 Python 标准库）
+- 🔒 安全的配置管理
+
+**快速开始：**
+```bash
+# 配置 Webhook URL（安装后需手动配置一次）
+~/.claude/skills/feishu-notify/feishu-notify.sh config "https://www.feishu.cn/flow/api/trigger-webhook/你的地址"
+
+# 发送测试消息
+~/.claude/skills/feishu-notify/feishu-notify.sh test
+
+# 手动发送通知
+~/.claude/skills/feishu-notify/feishu-notify.sh send "标题" "内容"
+```
+
+[查看详细文档 →](.claude/skills/feishu-notify/README.md)
+
+---
+
 ## 🚀 安装
 
 ### 克隆仓库
@@ -147,6 +173,26 @@ python3 query.py --list
 python3 query.py --no-ai "实时射击数据"
 ```
 
+### Feishu Notify Skill
+
+用于任务完成后发送飞书通知，适合：
+- 长时间任务完成提醒
+- CI/CD 流程通知
+- 部署完成通知
+- 任何需要异步通知的场景
+
+**示例场景：**
+```bash
+# 场景 1: 配置 Webhook
+feishu-notify.sh config "https://www.feishu.cn/flow/api/trigger-webhook/xxx"
+
+# 场景 2: 任务完成后通知
+feishu-notify.sh send "部署完成" "v2.0 已部署到生产环境"
+
+# 场景 3: 在 Claude Code 中使用
+# 告诉 Claude "完成后通知飞书"，Claude 会自动生成内容并推送
+```
+
 ## 🛠️ 技术栈
 
 ### Remote Exec
@@ -160,12 +206,17 @@ python3 query.py --no-ai "实时射击数据"
 - Anthropic API (Claude Opus 4.6)
 - sentence-transformers (嵌入模型)
 
+### Feishu Notify
+- Python 3 (标准库 urllib)
+- 飞书 Webhook API
+
 ## 📊 性能指标
 
 | Skill | 初始化时间 | 查询延迟 | 存储空间 |
 |-------|-----------|---------|---------|
 | Remote Exec | < 1s | < 100ms | < 1MB |
 | Referee | ~30s | < 100ms | ~10MB |
+| Feishu Notify | < 1s | < 500ms | < 1MB |
 
 ## 🤝 贡献
 
