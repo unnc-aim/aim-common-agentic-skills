@@ -4,12 +4,10 @@
 
 ## 安装
 
-通过项目根目录的 `install.sh` 统一安装，或手动复制：
+用 `npx skills` 安装（自动识别并装到你本地所有 agent）：
 
 ```bash
-mkdir -p ~/.claude/skills/feishu-notify
-cp feishu-notify.sh ~/.claude/skills/feishu-notify/
-chmod +x ~/.claude/skills/feishu-notify/feishu-notify.sh
+npx skills add unnc-aim/aim-common-agentic-skills --skill feishu-notify -g
 ```
 
 ## 配置

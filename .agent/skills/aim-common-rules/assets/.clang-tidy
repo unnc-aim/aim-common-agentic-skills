@@ -1,0 +1,70 @@
+---
+# =============================================================================
+# UNNC AIM team canonical C++ naming checks (.clang-tidy)
+# -----------------------------------------------------------------------------
+# Why this file exists: clang-format only does layout; it cannot check naming.
+#   This file uses readability-identifier-naming to enforce the naming rules in
+#   .github/profile/standard.cpp.md automatically.
+# Alignment: strictly follows the written standard.cpp.md
+#   functions / macro-functions = snake_case; variables = camelBack;
+#   classes / enums = PascalCase; struct/union typedef = lower_case (the _t
+#   suffix must be ensured manually); macros / constants = UPPER_CASE.
+#
+# CONFLICT (team to resolve):
+#   The vendored ros2_hik_camera/.clang-tidy uses lower_case variables and a
+#   trailing `_` on class members, which conflicts with the written
+#   standard.cpp.md (camelBack, no suffix). New repos follow the written
+#   standard; this file follows the written standard.
+#
+# Usage:
+#   single file: clang-tidy -p build --config-file=.clang-tidy src/foo.cpp
+#   batch:       run-clang-tidy -p build -config-file .clang-tidy src/*
+#   (requires compile_commands.json, e.g.
+#    colcon build --cmake-args -DCMAKE_EXPORT_COMPILE_COMMANDS=ON)
+# =============================================================================
+Checks:          '-*,
+                  readability-identifier-naming,
+                  modernize-use-nullptr,
+                  modernize-use-override,
+                  modernize-redundant-void-arg,
+                  readability-redundant-string-cstr,
+                  readability-simplify-boolean-expr,
+                  readability-container-size-empty,
+                  '
+HeaderFilterRegex: '.*'
+WarningsAsErrors:  ''
+CheckOptions:
+  # --- Types: classes / enums = PascalCase ---
+  - key:   readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key:   readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key:   readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+  # --- typedef (struct/union typedef names) = lower_case (the _t suffix cannot
+  #     be auto-checked; ensure it manually) ---
+  - key:   readability-identifier-naming.TypedefCase
+    value: lower_case
+  # --- functions (incl. member functions) = snake_case, per standard.cpp.md ---
+  - key:   readability-identifier-naming.FunctionCase
+    value: lower_case
+  - key:   readability-identifier-naming.MethodCase
+    value: lower_case
+  - key:   readability-identifier-naming.ParameterCase
+    value: camelBack
+  # --- variables / class members = camelBack, per standard.cpp.md ---
+  - key:   readability-identifier-naming.VariableCase
+    value: camelBack
+  - key:   readability-identifier-naming.ClassMemberCase
+    value: camelBack
+  # --- constants / macro variables / global constants = UPPER_CASE ---
+  - key:   readability-identifier-naming.ConstexprVariableCase
+    value: UPPER_CASE
+  - key:   readability-identifier-naming.GlobalConstantCase
+    value: UPPER_CASE
+  - key:   readability-identifier-naming.ClassConstantCase
+    value: UPPER_CASE
+  - key:   readability-identifier-naming.StaticConstantCase
+    value: UPPER_CASE
+  - key:   readability-identifier-naming.MacroDefinitionCase
+    value: UPPER_CASE   # NOTE: macro *functions* should be snake_case per standard.cpp.md, but clang-tidy cannot distinguish macro functions from macro variables — review manually

@@ -75,8 +75,8 @@ python3 query_counter.py --open
 
 系统会按以下顺序查找协议文档：
 
-1. `~/.claude/skills/referee/RoboMaster_2026_Protocol.md`
-2. `~/.claude/skills/referee/protocol.md`
+1. `~/.claude/skills/dji-referee/RoboMaster_2026_Protocol.md`
+2. `~/.claude/skills/dji-referee/protocol.md`
 3. `~/Downloads/RoboMaster 2026 机甲大师高校系列赛通信协议 V1.2.0（20260209）/...`
 
 如果文档未找到，会显示警告信息。
@@ -94,30 +94,30 @@ python3 query_counter.py --open
 
 ## 在 Claude Code 中使用
 
-当你在 Claude Code 中使用 `/referee` 时：
+当你在 Claude Code 中使用 `/dji-referee` 时：
 
 **前 5 次查询：**
 ```
-你: /referee 如何获取机器人血量
+你: /dji-referee 如何获取机器人血量
 Claude: [正常返回查询结果]
 
-你: /referee 0x0208 是什么
+你: /dji-referee 0x0208 是什么
 Claude: [正常返回查询结果]
 ...
 ```
 
 **第 6 次查询：**
 ```
-你: /referee 射击数据格式
+你: /dji-referee 射击数据格式
 Claude: 你已经查询了 5 次以上。建议直接打开协议文档使用 Cmd+F 搜索，
        这样可能更快。我已经为你打开了文档。
 
-       如果仍想使用查询工具，可以说 "/referee --force 射击数据格式"
+       如果仍想使用查询工具，可以说 "/dji-referee --force 射击数据格式"
 ```
 
 **使用 force：**
 ```
-你: /referee --force 射击数据格式
+你: /dji-referee --force 射击数据格式
 Claude: [正常返回查询结果，计数器已重置]
 ```
 
@@ -183,7 +183,7 @@ python3 query_simple.py --force "装甲模块"
 **解决：**
 ```bash
 # 将协议文档复制到正确位置
-cp "你的文档路径.md" ~/.claude/skills/referee/protocol.md
+cp "你的文档路径.md" ~/.claude/skills/dji-referee/protocol.md
 
 # 或手动打开
 python3 query_counter.py --open
@@ -204,7 +204,7 @@ python3 query_counter.py --reset
 **解决：**
 ```bash
 # 方法 1: 始终使用 --force
-alias referee='python3 ~/.claude/skills/referee/query_simple.py --force'
+alias dji-referee='python3 ~/.claude/skills/dji-referee/query_simple.py --force'
 
 # 方法 2: 删除计数器文件
 rm ~/.claude/referee_query_count.json

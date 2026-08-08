@@ -1,4 +1,4 @@
-# Referee Skill
+# DJI Referee Skill
 
 RoboMaster 裁判系统通信协议智能查询工具。
 
@@ -22,7 +22,7 @@ pip3 install chromadb
 ### 2. 初始化知识库
 
 ```bash
-cd .claude/skills/referee
+cd .claude/skills/dji-referee
 python3 vectorstore.py chunks.json
 ```
 
@@ -130,7 +130,7 @@ $ python3 query.py --list
 ## 文件结构
 
 ```
-.claude/skills/referee/
+.claude/skills/dji-referee/
 ├── ingest.py           # 文档解析和切片（9.4KB）
 ├── vectorstore.py      # 向量存储和检索（5.5KB）
 ├── query.py            # 查询 CLI 工具（纯检索，无 LLM）

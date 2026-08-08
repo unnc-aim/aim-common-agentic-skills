@@ -1,11 +1,16 @@
-# Referee Skill
+---
+name: dji-referee
+description: Query the RoboMaster referee-system communication protocol — command codes (e.g. 0x0003), data formats, link types, and baud rates. Zero-dependency instant lookup via query_simple.py over 104 prebuilt doc slices. Use when the user asks about the RoboMaster protocol, the referee system, a specific command code, or a protocol data field.
+---
+
+# DJI Referee Skill
 
 RoboMaster 裁判系统通信协议智能查询 skill。**零依赖，即开即用**。
 
 ## Trigger
 
 当用户提到以下内容时激活：
-- `/referee` 命令
+- `/dji-referee` 命令
 - 查询 RoboMaster 协议、裁判系统、通信协议
 - 询问命令码（如 "0x0001 是什么"）
 - 询问数据格式、通信链路等协议相关问题
@@ -26,7 +31,7 @@ RoboMaster 裁判系统通信协议智能查询 skill。**零依赖，即开即�
 
 ## Usage in Claude Code
 
-当 skill 被激活时（用户使用 `/referee` 或询问协议相关问题），Claude 应该：
+当 skill 被激活时（用户使用 `/dji-referee` 或询问协议相关问题），Claude 应该：
 
 ### 1. 执行查询获取相关内容
 
@@ -34,16 +39,16 @@ RoboMaster 裁判系统通信协议智能查询 skill。**零依赖，即开即�
 
 ```bash
 # 自然语言查询
-python3 ~/.claude/skills/referee/query_simple.py "如何获取机器人血量"
+python3 ~/.claude/skills/dji-referee/query_simple.py "如何获取机器人血量"
 
 # 命令码精确查询
-python3 ~/.claude/skills/referee/query_simple.py 0x0003
+python3 ~/.claude/skills/dji-referee/query_simple.py 0x0003
 
 # 列出所有命令码
-python3 ~/.claude/skills/referee/query_simple.py --list
+python3 ~/.claude/skills/dji-referee/query_simple.py --list
 
 # JSON 格式输出（用于程序化处理）
-python3 ~/.claude/skills/referee/query_simple.py --json "图传链路波特率"
+python3 ~/.claude/skills/dji-referee/query_simple.py --json "图传链路波特率"
 ```
 
 ### 2. 后处理和精准回答
@@ -56,11 +61,11 @@ python3 ~/.claude/skills/referee/query_simple.py --json "图传链路波特率"
 
 ### 3. 回答示例
 
-**用户问:** `/referee 如何获取机器人血量？`
+**用户问:** `/dji-referee 如何获取机器人血量？`
 
 **Claude 执行:**
 ```bash
-python3 ~/.claude/skills/referee/query_simple.py "如何获取机器人血量"
+python3 ~/.claude/skills/dji-referee/query_simple.py "如何获取机器人血量"
 ```
 
 **工具返回:** 命令码 0x0003 的完整定义（包含数据格式表格）
@@ -77,11 +82,11 @@ python3 ~/.claude/skills/referee/query_simple.py "如何获取机器人血量"
 
 ### 示例 1: 查询命令码
 
-**用户:** `/referee 0x0201 是什么命令？`
+**用户:** `/dji-referee 0x0201 是什么命令？`
 
 **Claude 执行:**
 ```bash
-python3 ~/.claude/skills/referee/query_simple.py 0x0201
+python3 ~/.claude/skills/dji-referee/query_simple.py 0x0201
 ```
 
 **输出:**
@@ -100,11 +105,11 @@ python3 ~/.claude/skills/referee/query_simple.py 0x0201
 
 ### 示例 2: 自然语言查询
 
-**用户:** `/referee 图传链路的波特率是多少`
+**用户:** `/dji-referee 图传链路的波特率是多少`
 
 **Claude 执行:**
 ```bash
-python3 ~/.claude/skills/referee/query_simple.py "图传链路波特率"
+python3 ~/.claude/skills/dji-referee/query_simple.py "图传链路波特率"
 ```
 
 **输出:**
@@ -127,11 +132,11 @@ python3 ~/.claude/skills/referee/query_simple.py "图传链路波特率"
 
 ### 示例 3: 列出所有命令码
 
-**用户:** `/referee 列出所有命令码`
+**用户:** `/dji-referee 列出所有命令码`
 
 **Claude 执行:**
 ```bash
-python3 ~/.claude/skills/referee/query_simple.py --list
+python3 ~/.claude/skills/dji-referee/query_simple.py --list
 ```
 
 **输出:**
@@ -217,12 +222,8 @@ Claude Code (分析和回答)
 
 **解决：**
 ```bash
-# 运行安装脚本
-./install.sh
-
-# 或手动复制
-cp .claude/skills/referee/query_simple.py ~/.claude/skills/referee/
-cp .claude/skills/referee/chunks.json ~/.claude/skills/referee/
+# 重新安装 referee skill
+npx skills add unnc-aim/aim-common-agentic-skills --skill dji-referee -g
 ```
 
 ### 问题：查询结果不准确

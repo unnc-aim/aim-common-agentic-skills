@@ -1,3 +1,8 @@
+---
+name: feishu-notify
+description: Send notifications to a Feishu (飞书) webhook when tasks complete. Configure the webhook URL once, then push auto-generated title + body summaries via feishu-notify.sh. Use when the user asks to send a Feishu / 飞书 notification, or wants to be notified after a task finishes.
+---
+
 # Feishu Notify Skill
 
 任务完成后向飞书 Webhook 发送通知。
