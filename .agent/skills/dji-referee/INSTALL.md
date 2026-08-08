@@ -1,4 +1,4 @@
-# Referee Skill - 安装和使用指南
+# DJI Referee Skill - 安装和使用指南
 
 ## 快速安装
 
@@ -7,7 +7,7 @@
 pip3 install chromadb
 
 # 2. 初始化知识库
-cd /Users/LijieZhou/Development/aim-claude-skills/.claude/skills/referee
+cd /Users/LijieZhou/Development/aim-claude-skills/.claude/skills/dji-referee
 python3 vectorstore.py chunks.json
 
 # 3. 测试查询

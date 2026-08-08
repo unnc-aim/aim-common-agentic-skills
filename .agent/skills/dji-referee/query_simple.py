@@ -279,7 +279,7 @@ def main():
 
     except FileNotFoundError:
         print("❌ 错误: 未找到 chunks.json 文件")
-        print("请确保在 .claude/skills/referee/ 目录下运行此脚本")
+        print("请确保在 .claude/skills/dji-referee/ 目录下运行此脚本")
         sys.exit(1)
     except Exception as e:
         print(f"❌ 错误: {e}")

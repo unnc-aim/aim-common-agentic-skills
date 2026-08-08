@@ -1,4 +1,4 @@
-# Referee Skill - 零依赖版本
+# DJI Referee Skill - 零依赖版本
 
 ## 🎉 完全无需安装任何依赖！
 
@@ -8,7 +8,7 @@
 
 ```bash
 # 直接使用，无需安装任何东西！
-cd .claude/skills/referee
+cd .claude/skills/dji-referee
 python3 query_simple.py "如何获取机器人血量"
 python3 query_simple.py 0x0208
 python3 query_simple.py --list

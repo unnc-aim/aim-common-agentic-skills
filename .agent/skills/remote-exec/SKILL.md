@@ -1,3 +1,8 @@
+---
+name: remote-exec
+description: Execute commands and manage files on remote servers over SSH using ControlMaster persistent connections. Supports multiple hosts (add / remove / connect / disconnect / switch / list / status) and running commands via `exec`. Use when the user wants to run commands on a remote machine, work with files on a remote server, or manage dev / staging / prod SSH environments.
+---
+
 # Remote SSH Execution Skill
 
 Execute commands and manage files on remote servers via SSH with persistent connections.
