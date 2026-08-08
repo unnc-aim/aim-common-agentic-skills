@@ -22,7 +22,7 @@ This skill enables Claude to:
 
 The skill provides a wrapper script `remote-exec.sh` with these commands:
 
-- `add <name> <ssh-address> [port]` — Add a new SSH host
+- `add <name> <ssh-address> [port]` — Manually add a new SSH host (optional)
 - `remove <name>` — Remove a host configuration
 - `connect <name>` — Establish persistent SSH connection
 - `disconnect [name]` — Close SSH connection
@@ -38,19 +38,13 @@ The skill provides a wrapper script `remote-exec.sh` with these commands:
 When the skill is first activated:
 
 1. Check if the user has configured any hosts:
-   ```bash
    .claude/skills/remote-exec/remote-exec.sh list
-   ```
 
-2. If no hosts exist, guide the user to add one:
-   ```bash
+2. The script auto-imports aliases from ~/.ssh/config. If needed, user can still add manually:
    .claude/skills/remote-exec/remote-exec.sh add <name> <user@hostname> [port]
-   ```
 
 3. Connect to the host:
-   ```bash
    .claude/skills/remote-exec/remote-exec.sh connect <name>
-   ```
 
 ### Executing Commands
 

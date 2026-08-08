@@ -13,45 +13,54 @@
 ## 安装要求
 
 - `jq` - JSON 处理工具
-  ```bash
   # macOS
   brew install jq
 
   # Ubuntu/Debian
   apt-get install jq
-  ```
 
 - SSH 密钥认证已配置（无密码登录）
 
 ## 快速开始
 
-### 1. 添加远程主机
+### 1. 配置 ~/.ssh/config（推荐，自动导入）
+
+```sshconfig
+Host dev
+  HostName dev-server.com
+  User ubuntu
+  Port 22
+```
+
+首次执行 `list` 或 `connect` 时会自动导入以上 Host。
+
+### 2. 手动添加远程主机（可选）
 
 ```bash
 .claude/skills/remote-exec/remote-exec.sh add dev user@dev-server.com
 .claude/skills/remote-exec/remote-exec.sh add prod admin@prod-server.com 2222
 ```
 
-### 2. 连接到主机
+### 3. 连接到主机
 
 ```bash
 .claude/skills/remote-exec/remote-exec.sh connect dev
 ```
 
-### 3. 执行远程命令
+### 4. 执行远程命令
 
 ```bash
 .claude/skills/remote-exec/remote-exec.sh exec whoami
 .claude/skills/remote-exec/remote-exec.sh exec "ls -la /var/www"
 ```
 
-### 4. 切换主机
+### 5. 切换主机
 
 ```bash
 .claude/skills/remote-exec/remote-exec.sh switch prod
 ```
 
-### 5. 断开连接
+### 6. 断开连接
 
 ```bash
 .claude/skills/remote-exec/remote-exec.sh disconnect
@@ -61,7 +70,7 @@
 
 | 命令 | 说明 | 示例 |
 |------|------|------|
-| `add <name> <address> [port]` | 添加新主机 | `add dev user@host.com 22` |
+| `add <name> <address> [port]` | 手动添加新主机（可选） | `add dev user@host.com 22` |
 | `remove <name>` | 删除主机配置 | `remove dev` |
 | `connect <name>` | 建立连接 | `connect dev` |
 | `disconnect [name]` | 断开连接 | `disconnect` 或 `disconnect dev` |
