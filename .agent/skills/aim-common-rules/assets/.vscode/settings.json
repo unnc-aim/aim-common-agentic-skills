@@ -1,0 +1,45 @@
+{
+  // ===========================================================================
+  // UNNC AIM team — shared VS Code settings baseline
+  // Drop at the repo root as .vscode/settings.json. Merge into an existing file;
+  // do not overwrite. American English everywhere (code, comments, commit messages).
+  // See the unnc-aim/.github repo's profile/README.md §1.6 and the aim-common-rules skill.
+  // ===========================================================================
+
+  // --- Spelling (Code Spell Checker) -----------------------------------------
+  // American English. When cSpell flags a word, first check it is a real typo;
+  // if it is a correct term (team / domain jargon, acronym, proper noun) spelled
+  // in American English, add it to cSpell.words below (merge — do not overwrite).
+  // Never use this list to silence genuine typos.
+  "cSpell.language": "en-us",
+  "cSpell.words": [
+    "autopep8",
+    "clangd",
+    "colcon",
+    "isort",
+    "Pylance",
+    "rclpy",
+    "Robocon",
+    "RoboMaster",
+    "ros2",
+    "unnc"
+  ],
+
+  // --- Python: format on save + sort imports + Pylance -----------------------
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "isort.args": ["--line-length", "79"],
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+
+  // --- C++ -------------------------------------------------------------------
+  "[cpp]": {
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+    "editor.formatOnSave": true
+  }
+}

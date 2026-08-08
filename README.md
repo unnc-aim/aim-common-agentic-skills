@@ -104,6 +104,26 @@ python3 query.py --list
 
 ---
 
+### 4. AIM Common Rules - 战队仓库与代码规范
+
+UNNC AIM 战队的仓库命名、分支 / Conventional Commits、Python (autopep8 / PEP 8) 与 C++ (clang-format / clang-tidy) 格式化规范，附带可直接拷贝的规则文件。Agent 会在创建 / 命名仓库、核对 ROS2 包名、写 commit message、格式化代码等场景自动调用。规范的原始文档位于 [unnc-aim/.github](https://github.com/unnc-aim/.github) `profile/`。
+
+**特性：**
+- 📐 仓库命名决策树（赛用 / 学年 / 可复用）+ 已知反例
+- 🔀 分支命名 + Conventional Commits 模板
+- 🐍 Python：autopep8 + isort + Pylance 配置（line length 79）
+- ⚙️ C++：`.clang-format` / `.clang-tidy` 模板
+- 🛠️ VS Code 推荐插件 + `.vscode/settings.json` 基线
+
+**安装（推荐，支持 Claude Code / Cursor / Codex 等所有 agent）：**
+```bash
+npx skills add unnc-aim/aim-common-agentic-skills --skill aim-common-rules -g
+```
+
+[查看详细文档 →](.claude/skills/aim-common-rules/SKILL.md)
+
+---
+
 ## 🚀 安装
 
 ### 克隆仓库
