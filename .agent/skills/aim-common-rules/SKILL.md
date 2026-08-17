@@ -1,6 +1,6 @@
 ---
 name: aim-common-rules
-description: UNNC AIM team's repository and code standards. Covers repository naming (competition / aim- academic-year / reusable), branch and Conventional Commits rules, and Python (autopep8 / PEP 8) and C++ (clang-format / clang-tidy) formatting, with ready-to-copy canonical rule files. Use when creating or naming a repository, validating a ROS2 package.xml name, creating a branch, writing a git commit message, composing a competition workspace (git submodules under src/), or setting up Python or C++ formatting (.clang-format / setup.cfg / .clang-tidy).
+description: UNNC AIM team's repository and code standards. Covers repository naming (competition / aim- academic-year / reusable), branch and Conventional Commits rules, and Python (autopep8 / PEP 8) and C++ (clang-format / clang-tidy) formatting, with ready-to-copy canonical rule files. Use when creating or naming a repository, validating a ROS2 package.xml name, creating a branch, writing a git commit message, composing a competition workspace (git submodules under src/), or setting up Python or C++ formatting (.clang-format / setup.cfg / .clang-tidy), or applying the team's recommended git configuration.
 ---
 
 # UNNC AIM Team — Repository & Code Standards
@@ -21,7 +21,7 @@ Those written docs remain the source of truth; this skill (which lives in [`unnc
 |---|---|---|
 | Create / name a repo, validate a ROS2 package name | [references/repo-naming.md](references/repo-naming.md) | — |
 | Clone & organize a competition **workspace** (git submodules) | [references/workspace-organization.md](references/workspace-organization.md) | — |
-| Create a branch, write a commit message | [references/git-workflow.md](references/git-workflow.md) | — |
+| Create a branch, write a commit message, set up recommended git config | [references/git-workflow.md](references/git-workflow.md) | [assets/.gitattributes](assets/.gitattributes) |
 | Format / configure **Python** | [references/python-formatting.md](references/python-formatting.md) | [assets/setup.cfg](assets/setup.cfg) |
 | Format / configure **C++** | [references/cpp-formatting.md](references/cpp-formatting.md) | [assets/.clang-format](assets/.clang-format) + [assets/.clang-tidy](assets/.clang-tidy) |
 | Set up **VS Code** (extensions, Pylance, format-on-save, spelling) | [references/python-formatting.md](references/python-formatting.md) §3, §5, §6 + `profile/README.md` §1.6 | [assets/.vscode/extensions.json](assets/.vscode/extensions.json) + [assets/.vscode/settings.json](assets/.vscode/settings.json) |
