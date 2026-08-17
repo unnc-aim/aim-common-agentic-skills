@@ -1,6 +1,6 @@
 # Branch & Commit Rules
 
-> Source of truth: [`README.md` §1.3 / §1.4](https://github.com/unnc-aim/.github/blob/main/profile/README.md) in `unnc-aim/.github`.
+> Source of truth: [`README.md` §1.3 / §1.4 / §1.7](https://github.com/unnc-aim/.github/blob/main/profile/README.md) in `unnc-aim/.github`.
 
 ## 1. Branch naming
 
@@ -67,3 +67,18 @@ BREAKING CHANGE: Updated the user model to include an additional "authToken" fie
 - All **stable** repos must not push directly to `main` → create a branch + Pull Request.
 - The default branch is always `main` (**never** `master`).
 - No build artifacts in the repo (exclude them via `.gitignore`).
+- Merge PRs with a **merge commit** by default — keep the full branch history; squash / rebase only with a specific reason.
+- Recommended repo settings: default branch `main`; auto-delete the head branch after merge; protect `main` (no force push, PR required).
+
+## 4. Recommended local git config
+
+One-time global setup for every member (written docs: `profile/README.md` §1.7):
+
+| Command | Purpose |
+| --- | --- |
+| `git config --global pull.rebase true` | `git pull` rebases by default → linear history |
+| `git config --global init.defaultBranch main` | new repos start on `main` (never `master`) |
+| `git config --global push.autoSetupRemote true` | first `git push` on a new branch just works — no `-u` needed (git >= 2.37) |
+| `git config --global commit.verbose true` | commit editor shows the full diff → better Conventional Commits |
+
+Repo-level: copy [assets/.gitattributes](../assets/.gitattributes) to the repo root to normalize line endings across Windows / macOS / Linux (prevents CRLF noise in diffs).

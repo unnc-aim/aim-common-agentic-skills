@@ -1,6 +1,6 @@
 ---
 name: aim-common-rules
-description: UNNC AIM team's repository and code standards. Covers repository naming (competition / aim- academic-year / reusable), branch and Conventional Commits rules, and Python (autopep8 / PEP 8) and C++ (clang-format / clang-tidy) formatting, with ready-to-copy canonical rule files. Use when creating or naming a repository, validating a ROS2 package.xml name, creating a branch, writing a git commit message, composing a competition workspace (git submodules under src/), or setting up Python or C++ formatting (.clang-format / setup.cfg / .clang-tidy).
+description: UNNC AIM team's repository and code standards. Covers repository naming (competition / aim- academic-year / reusable), branch and Conventional Commits rules, and formatting standards for Python (autopep8 / PEP 8), C++ (clang-format / clang-tidy), TypeScript (Prettier + ESLint, pnpm), Go (gofmt), CMake, and Markdown / YAML / JSON, with ready-to-copy canonical rule files. Use when creating or naming a repository, validating a ROS2 package.xml name, creating a branch, writing a git commit message, composing a competition workspace (git submodules under src/), or setting up Python, C++ (.clang-format / setup.cfg / .clang-tidy), TypeScript (Prettier / ESLint / pnpm) or Go (gofmt) tooling, styling a CMakeLists.txt or Markdown / YAML / JSON files, or applying the team's recommended git configuration.
 ---
 
 # UNNC AIM Team — Repository & Code Standards
@@ -10,6 +10,8 @@ This skill is the **single entry point** for the team's standards. It consolidat
 - Repository naming / branch / commit rules ← [`profile/README.md`](https://github.com/unnc-aim/.github/blob/main/profile/README.md)
 - C++ standard ← [`profile/standard.cpp.md`](https://github.com/unnc-aim/.github/blob/main/profile/standard.cpp.md)
 - Python standard ← [`profile/standard.py.md`](https://github.com/unnc-aim/.github/blob/main/profile/standard.py.md)
+- TypeScript / Go / CMake standards ← [`profile/standard.ts.md`](https://github.com/unnc-aim/.github/blob/main/profile/standard.ts.md) / [`standard.go.md`](https://github.com/unnc-aim/.github/blob/main/profile/standard.go.md) / [`standard.cmake.md`](https://github.com/unnc-aim/.github/blob/main/profile/standard.cmake.md)
+- Docs style (Markdown / YAML / JSON) ← [`profile/standard.docs.md`](https://github.com/unnc-aim/.github/blob/main/profile/standard.docs.md)
 
 Those written docs remain the source of truth; this skill (which lives in [`unnc-aim/aim-common-agentic-skills`](https://github.com/unnc-aim/aim-common-agentic-skills)) turns them into actionable checklists plus ready-to-copy rule files (`assets/`).
 
@@ -21,9 +23,13 @@ Those written docs remain the source of truth; this skill (which lives in [`unnc
 |---|---|---|
 | Create / name a repo, validate a ROS2 package name | [references/repo-naming.md](references/repo-naming.md) | — |
 | Clone & organize a competition **workspace** (git submodules) | [references/workspace-organization.md](references/workspace-organization.md) | — |
-| Create a branch, write a commit message | [references/git-workflow.md](references/git-workflow.md) | — |
+| Create a branch, write a commit message, set up recommended git config | [references/git-workflow.md](references/git-workflow.md) | [assets/.gitattributes](assets/.gitattributes) |
 | Format / configure **Python** | [references/python-formatting.md](references/python-formatting.md) | [assets/setup.cfg](assets/setup.cfg) |
 | Format / configure **C++** | [references/cpp-formatting.md](references/cpp-formatting.md) | [assets/.clang-format](assets/.clang-format) + [assets/.clang-tidy](assets/.clang-tidy) |
+| Format / configure **TypeScript** (Prettier, ESLint, pnpm) | [references/ts-formatting.md](references/ts-formatting.md) | [assets/.prettierrc](assets/.prettierrc) + [assets/eslint.config.js](assets/eslint.config.js) |
+| Format **Go** | [references/go-formatting.md](references/go-formatting.md) | — |
+| Style a **CMakeLists.txt** | [references/cmake-style.md](references/cmake-style.md) | — |
+| Markdown / YAML / JSON style (`.editorconfig`) | [references/docs-style.md](references/docs-style.md) | [assets/.editorconfig](assets/.editorconfig) |
 | Set up **VS Code** (extensions, Pylance, format-on-save, spelling) | [references/python-formatting.md](references/python-formatting.md) §3, §5, §6 + `profile/README.md` §1.6 | [assets/.vscode/extensions.json](assets/.vscode/extensions.json) + [assets/.vscode/settings.json](assets/.vscode/settings.json) |
 
 ## Naming quick reference (most-used — read this first)

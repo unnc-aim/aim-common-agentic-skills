@@ -4,6 +4,9 @@
     "ms-python.vscode-pylance",
     "ms-python.autopep8",
     "llvm-vs-code-extensions.vscode-clangd",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "golang.go",
     "streetsidesoftware.code-spell-checker",
     "editorconfig.editorconfig"
   ]

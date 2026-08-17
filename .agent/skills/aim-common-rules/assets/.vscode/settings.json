@@ -16,8 +16,13 @@
     "autopep8",
     "clangd",
     "colcon",
+    "corepack",
+    "gofmt",
+    "goimports",
     "isort",
+    "pnpm",
     "Pylance",
+    "prettier",
     "rclpy",
     "Robocon",
     "RoboMaster",
@@ -40,6 +45,17 @@
   // --- C++ -------------------------------------------------------------------
   "[cpp]": {
     "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+    "editor.formatOnSave": true
+  },
+
+  // --- TypeScript: Prettier on save -------------------------------------------
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // --- Go: the Go extension (gofmt / goimports) formats on save ---------------
+  "[go]": {
     "editor.formatOnSave": true
   }
 }
