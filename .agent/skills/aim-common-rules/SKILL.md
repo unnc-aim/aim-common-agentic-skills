@@ -36,11 +36,12 @@ Those written docs remain the source of truth; this skill (which lives in [`unnc
 
 | Repo type | Pattern | Separator | Example |
 |---|---|---|---|
-| **Competition** (one year / one match / one robot) | `[2-digit year][match abbr]_[robot (optional)]_[package]` | underscore `_` | `26RC_R2_controller`, `26RC_interfaces` |
+| **Competition** (one year / one match / one robot) | `[2-digit year][match abbr]_[robot (optional)]_[package]` | underscore `_` | `26RC_R2_controller`, `26RC_interfaces`, `26UL_Sentry_ws` |
 | **Internal / academic-year** (non-competition) | `aim-[4-digit year]-[package]` (long-term libs may drop the year) | hyphen `-` | `aim-2526-py-coursework`, `aim-rookie-courses` |
 | **External / reusable / lib** | `BrandingRepo` or `package_name` | free | `RoboMark`, `ros2_hik_camera` |
 
 - Year/match tokens: `26RC` = 2026 Robocon; `25RM` = 2025 RoboMaster; `2526` = academic year 2025-2026 (only in `aim-*`).
+- **Segment casing:** 2-digit year (`26`); match abbreviation ALL CAPS (`RC` / `UC` / `UL`); robot name, when present, run-together PascalCase (`Sentry`, `NormalHero`, `R1`); package segment lowercase `snake_case`.
 - **ROS2 package-name consistency:** if the repo is a single ROS package, the `<name>` in `package.xml` must match the repo's "package" segment; prefixes like `ros2_` are usually **dropped** in `<name>` (e.g. `ros2_hik_camera` → `<name>hik_camera</name>`).
 - Default branch is always `main` (**never** `master`); competition / stable repos must not push directly to `main` — use a Pull Request.
 

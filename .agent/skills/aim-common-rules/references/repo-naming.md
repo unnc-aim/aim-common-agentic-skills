@@ -10,12 +10,18 @@ The org's repository naming has **3 cases**. First decide which category your re
 
 ### 1.1 Competition repos `[year][match abbr]_[robot (optional)]_[package]`
 
-For **one-off** repos tied to "a given year / match / robot". Overall **snake_case**, segments joined by underscore `_`; the `[year][match abbr]` part is a single run-together alphanumeric token (**no** underscore between year and match abbreviation).
+For **one-off** repos tied to "a given year / match / robot". Segments are joined by underscore `_`; the `[year][match abbr]` part is a single run-together alphanumeric token (**no** underscore between year and match abbreviation). Casing per segment:
+
+- Year: two digits (`26` = 2026, `25` = 2025)
+- Match abbreviation: ALL CAPS (`RC` / `UC` / `UL`, …)
+- Robot name, when present: run-together PascalCase (`Sentry`, `Infantry`, `NormalHero`, `R1`, `R2`)
+- Package segment: lowercase `snake_case`
 
 - `26RC_R2_ws` — 2026 Robocon main match, R2 robot main workspace
 - `26RC_R2_kfs_tracker` — 2026 Robocon R2 KFS visual tracking (ROS package name follows the same rule)
 - `26RC_R1_arm_controller` — 2026 Robocon R1 arm controller
 - `26RC_interfaces` — 2026 Robocon common interfaces (the **robot segment may be omitted** when shared across robots)
+- `26UL_Sentry_ws` — 2026 RM UL sentry robot main workspace (named robots are PascalCase, e.g. `Sentry`)
 - `25RM_raw_rm_vision` — 2025 RoboMaster vision main repo
 
 > **ROS package-name rule**: if it is a ROS Package, the `<name>` in `package.xml` must match the "package" segment of the repo name, and words within the package name are also `_`-separated. `26RC_interfaces` is an exception using `rc_interfaces` (see §6 known inconsistencies).
@@ -48,7 +54,9 @@ For open / general-purpose / reusable complete projects, wheels, libs. Free nami
 | --- | --- | --- |
 | `26RC` / `YYRC` | 2-digit year + Robocon (main match) | Competition |
 | `25RM` / `YYUL` | 2-digit year + RoboMaster University League | Competition |
+| `24UC` / `YYUC` | 2-digit year + UNNC Cup (in-school match) | Competition |
 | `R1` / `R2` | Robot number within a match (e.g. R1 = arm, R2 = main robot) | Competition |
+| `Sentry` / `NormalHero` | Robot NAME (as opposed to a number) — PascalCase, words run together (no `_`) | Competition |
 | `2526` | 4-digit academic year 2025-2026 | `aim-*` only |
 | `aim-` | Team-internal, non-competition (courses / training / assessment) | Internal |
 | `ros2_` | Reusable ROS2 ecosystem package (driver / feature) | Reusable |
@@ -58,7 +66,7 @@ For open / general-purpose / reusable complete projects, wheels, libs. Free nami
 
 | Repo type | Casing | Segment separator |
 | --- | --- | --- |
-| Competition | snake_case | underscore `_` |
+| Competition | lowercase `snake_case` + PascalCase robot segment (`Sentry`, `R1`) | underscore `_` |
 | Internal / academic-year (`aim-*`) | kebab-case (all lowercase) | hyphen `-` |
 | Reusable ROS package | snake_case | underscore `_` |
 | Branding / vendor SDK / docs | free (often PascalCase + hyphens) | free |
@@ -73,6 +81,7 @@ Branch names: all lowercase, words joined by `_`; default branch `main` (never `
 Is this repo a one-off for a specific year/match?
 ├─ yes → competition: [year][match abbr]_[robot (optional)]_[package]   e.g. 26RC_R2_controller
 │         · shared across robots → may omit the robot segment            e.g. 26RC_interfaces
+│         · robot segment: number (R1/R2) or PascalCase robot name       e.g. 26UL_Sentry_ws
 │         · it's a ROS package → <name> matches the "package" segment
 │
 └─ no  → is it AIM-internal, non-competition (course/training/assessment/long-term)?
@@ -105,4 +114,5 @@ Is this repo a one-off for a specific year/match?
 | `screw_gripper_controller` | No README; `<name>` is `clapper_control`, mismatching the repo name (violates package-name consistency) | Align repo name and package name (pick one) |
 | `26RC_interfaces` | `<name>` is `rc_interfaces` (the package segment `interfaces` is too generic) | Acceptable exception, but be aware |
 | `Vision-VSCode-Radar-2025` | Actually a 2025 RM radar (competition), but uses branding-style PascalCase + `-2025` suffix | Legacy; name new competition repos as `25RM_*` |
+| `26UL_engineer_*`, `26RM_engineer_controller_serial`, `26UL_balanced_infantry_control`, `26UL_pb2025_sentry_*` | Robot-name words lowercase (`engineer`, `balanced_infantry`, `sentry`) — the robot segment should be PascalCase (e.g. `26UL_Engineer_arm`) | Rename in a batch when convenient |
 | `dji_referee_protocol` | RM-specific yet treated as a reusable package (no prefix) | Acceptable "reusable" classification, but make it deliberate |
