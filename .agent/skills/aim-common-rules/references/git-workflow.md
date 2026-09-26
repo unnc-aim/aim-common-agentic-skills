@@ -1,10 +1,10 @@
 # Branch & Commit Rules
 
-> Source of truth: [`README.md` §1.3 / §1.4 / §1.7](https://github.com/unnc-aim/.github/blob/main/profile/README.md) in `unnc-aim/.github`.
+> Source of truth: [`README.md` §1.3 / §1.4 / §1.7 / §1.8](https://github.com/unnc-aim/.github/blob/main/profile/README.md) in `unnc-aim/.github`.
 
 ## 0. The committer is you — AI or not
 
-Team policy (defined in this repo): whether you do the work yourself or an AI agent does it for you, **the work itself — and every `git commit` — is yours**. Everything the AI you use achieves, and every mistake it makes, is attributed to **you, the one who used it**. Credit and blame both land on the same head: yours.
+Team policy — written form: [`README.md` §1.8](https://github.com/unnc-aim/.github/blob/main/profile/README.md) in `unnc-aim/.github`. Whether you do the work yourself or an AI agent does it for you, **the work itself — and every `git commit` — is yours**. Everything the AI you use achieves, and every mistake it makes, is attributed to **you, the one who used it**. Credit and blame both land on the same head: yours.
 
 Concretely:
 
@@ -95,7 +95,7 @@ Repo-level: copy [assets/.gitattributes](../assets/.gitattributes) to the repo r
 
 ## 5. AI-agent git behavior
 
-Rules for any AI agent (Claude Code / Cursor / Codex / …) working in a team repo. They complement §1–§4 (the human workflow) and are defined in this repo rather than `profile/README.md`.
+Rules for any AI agent (Claude Code / Cursor / Codex / …) working in a team repo. They complement §1–§4 (the human workflow); the written form lives in `profile/README.md` §1.8.
 
 ### 5.1 Never commit / push by default
 
