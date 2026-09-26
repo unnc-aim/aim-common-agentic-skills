@@ -1,6 +1,6 @@
 ---
 name: aim-common-rules
-description: UNNC AIM team's repository and code standards. Covers repository naming (competition / aim- academic-year / reusable), branch and Conventional Commits rules, and formatting standards for Python (autopep8 / PEP 8), C++ (clang-format / clang-tidy), TypeScript (Prettier + ESLint, pnpm), Go (gofmt), CMake, and Markdown / YAML / JSON, with ready-to-copy canonical rule files. Use when creating or naming a repository, validating a ROS2 package.xml name, creating a branch, writing a git commit message, composing a competition workspace (git submodules under src/), or setting up Python, C++ (.clang-format / setup.cfg / .clang-tidy), TypeScript (Prettier / ESLint / pnpm) or Go (gofmt) tooling, styling a CMakeLists.txt or Markdown / YAML / JSON files, or applying the team's recommended git configuration.
+description: UNNC AIM team's repository and code standards. Covers repository naming (competition / aim- academic-year / reusable), branch and Conventional Commits rules, AI-agent git behavior (never commit / push unless the user explicitly asks in the current task; never call the gh CLI without explicit permission; never add an AI Co-Authored-By trailer; suggest a commit message at the end of a code-changing task), and formatting standards for Python (autopep8 / PEP 8), C++ (clang-format / clang-tidy), TypeScript (Prettier + ESLint, pnpm), Go (gofmt), CMake, and Markdown / YAML / JSON, with ready-to-copy canonical rule files. Use when creating or naming a repository, validating a ROS2 package.xml name, creating a branch, writing a git commit message, on any task that could involve committing, pushing, or calling gh, composing a competition workspace (git submodules under src/), or setting up Python, C++ (.clang-format / setup.cfg / .clang-tidy), TypeScript (Prettier / ESLint / pnpm) or Go (gofmt) tooling, styling a CMakeLists.txt or Markdown / YAML / JSON files, or applying the team's recommended git configuration.
 ---
 
 # UNNC AIM Team — Repository & Code Standards
@@ -20,10 +20,10 @@ Those written docs remain the source of truth; this skill (which lives in [`unnc
 ## Where to look
 
 | Task | Read | Copy this file |
-|---|---|---|
+| --- | --- | --- |
 | Create / name a repo, validate a ROS2 package name | [references/repo-naming.md](references/repo-naming.md) | — |
 | Clone & organize a competition **workspace** (git submodules) | [references/workspace-organization.md](references/workspace-organization.md) | — |
-| Create a branch, write a commit message, set up recommended git config | [references/git-workflow.md](references/git-workflow.md) | [assets/.gitattributes](assets/.gitattributes) |
+| Create a branch, write a commit message, follow the agent git-safety rules, set up recommended git config | [references/git-workflow.md](references/git-workflow.md) | [assets/.gitattributes](assets/.gitattributes) |
 | Format / configure **Python** | [references/python-formatting.md](references/python-formatting.md) | [assets/setup.cfg](assets/setup.cfg) |
 | Format / configure **C++** | [references/cpp-formatting.md](references/cpp-formatting.md) | [assets/.clang-format](assets/.clang-format) + [assets/.clang-tidy](assets/.clang-tidy) |
 | Format / configure **TypeScript** (Prettier, ESLint, pnpm) | [references/ts-formatting.md](references/ts-formatting.md) | [assets/.prettierrc](assets/.prettierrc) + [assets/eslint.config.js](assets/eslint.config.js) |
@@ -35,7 +35,7 @@ Those written docs remain the source of truth; this skill (which lives in [`unnc
 ## Naming quick reference (most-used — read this first)
 
 | Repo type | Pattern | Separator | Example |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **Competition** (one year / one match / one robot) | `[2-digit year][match abbr]_[robot (optional)]_[package]` | underscore `_` | `26RC_R2_controller`, `26RC_interfaces`, `26UL_Sentry_ws` |
 | **Internal / academic-year** (non-competition) | `aim-[4-digit year]-[package]` (long-term libs may drop the year) | hyphen `-` | `aim-2526-py-coursework`, `aim-rookie-courses` |
 | **External / reusable / lib** | `BrandingRepo` or `package_name` | free | `RoboMark`, `ros2_hik_camera` |
@@ -49,7 +49,7 @@ Those written docs remain the source of truth; this skill (which lives in [`unnc
 
 ## Commit message quick reference (Conventional Commits)
 
-```
+```text
 <type>(<scope>): <subject>
 <blank line>
 <body>           # optional, wrap at <=72 chars
@@ -58,6 +58,10 @@ Those written docs remain the source of truth; this skill (which lives in [`unnc
 ```
 
 `type` ∈ `feat | fix | docs | style | refactor | test | chore | perf | ci | build`; `subject` ≤ 50 chars, imperative mood, lowercase first letter, no trailing punctuation. Details: [references/git-workflow.md](references/git-workflow.md).
+
+**Agent rules:** never run `git commit` / `git push` unless the user explicitly asks in the current task, never call the `gh` CLI without explicit permission (any subcommand), never add an AI `Co-Authored-By:` trailer to any commit, and after any code-changing task suggest a commit message — one line, ≤50 chars including the type prefix, American English — instead of committing. Details: [references/git-workflow.md](references/git-workflow.md) §5.
+
+**The committer is you, AI or not:** credit for what your AI gets right and blame for what it gets wrong both land on you, the user — so review the diff and commit yourself, with no AI co-author trailer. Policy: [references/git-workflow.md](references/git-workflow.md) §0.
 
 ## How members adopt this skill
 
@@ -75,7 +79,7 @@ npx skills add unnc-aim/aim-common-agentic-skills --skill aim-common-rules -g
 **Whether or not you use AI**, copy the canonical formatting rule files into **your repo root** and commit them, so everyone's editors / CI agree:
 
 | Language | Copy as | Source |
-|---|---|---|
+| --- | --- | --- |
 | C++ | `.clang-format` and `.clang-tidy` | [assets/.clang-format](assets/.clang-format), [assets/.clang-tidy](assets/.clang-tidy) |
 | Python | the `[flake8]` / `[autopep8]` / `[isort]` sections of `setup.cfg` (merge in — do not overwrite ROS `[develop]`/`[install]`) | [assets/setup.cfg](assets/setup.cfg) |
 

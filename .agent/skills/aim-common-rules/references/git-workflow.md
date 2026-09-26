@@ -2,6 +2,16 @@
 
 > Source of truth: [`README.md` §1.3 / §1.4 / §1.7](https://github.com/unnc-aim/.github/blob/main/profile/README.md) in `unnc-aim/.github`.
 
+## 0. The committer is you — AI or not
+
+Team policy (defined in this repo): whether you do the work yourself or an AI agent does it for you, **the work itself — and every `git commit` — is yours**. Everything the AI you use achieves, and every mistake it makes, is attributed to **you, the one who used it**. Credit and blame both land on the same head: yours.
+
+Concretely:
+
+- **Review what the AI produced as if you had written it** — as far as the team is concerned, you did.
+- **Commit yourself, under your own name** — a commit is your personal endorsement of the change, which is exactly why agents must never commit or push for you (§5.1).
+- **Never credit the AI as a co-author.** No `Co-Authored-By:` trailer naming an AI (and no "Generated with …" attribution footer) on team commits — authorship and accountability run together, and both belong to you alone.
+
 ## 1. Branch naming
 
 - Branch names are **all lowercase**, words joined by **underscores `_`**.
@@ -45,7 +55,7 @@ BREAKING CHANGE: Updated the user model to include an additional "authToken" fie
 | `<scope>` | no | affected module/scope, e.g. `user-auth`, `api`, `ui`; may be omitted |
 | `<subject>` | yes | short description, **<=50 chars**; imperative mood (`Add` not `Added`); **lowercase first letter**; **no trailing punctuation** |
 | `<body>` | no | detailed explanation, wrap each line at **<=72 chars**; cover why / how / context |
-| `<footer>` | no | `BREAKING CHANGE: ...` for breaking changes; `Closes #123` / `Refs #456` to reference issues |
+| `<footer>` | no | `BREAKING CHANGE: ...` for breaking changes; `Closes #123` / `Refs #456` to reference issues; **never a `Co-Authored-By:` trailer crediting an AI** (§0) |
 
 ### 2.3 type values
 
@@ -82,3 +92,44 @@ One-time global setup for every member (written docs: `profile/README.md` §1.7)
 | `git config --global commit.verbose true` | commit editor shows the full diff → better Conventional Commits |
 
 Repo-level: copy [assets/.gitattributes](../assets/.gitattributes) to the repo root to normalize line endings across Windows / macOS / Linux (prevents CRLF noise in diffs).
+
+## 5. AI-agent git behavior
+
+Rules for any AI agent (Claude Code / Cursor / Codex / …) working in a team repo. They complement §1–§4 (the human workflow) and are defined in this repo rather than `profile/README.md`.
+
+### 5.1 Never commit / push by default
+
+- **Unless the user explicitly asks, never run or assist any `git commit` or `git push`.** This includes, but is not limited to:
+  - Running `git commit` / `git push` directly (including `--force`, `--tags`, and other variants);
+  - Running commands that auto-create commits on the user's behalf (e.g. scaffolding tools or package-manager init flows) without telling the user;
+  - Triggering commits indirectly through hooks such as husky or lint-staged.
+- Only execute when the user **explicitly asks in the current task** (e.g. "commit this", "commit and push").
+- **Approval does not carry over between tasks**: the user having asked for a commit in a previous task never means you may commit unprompted in the next one. Explicit instruction is required every time.
+- Read-only Git operations are unrestricted: `git status`, `git diff`, `git log`, `git branch`, `git show`, etc. can be used freely.
+- If a workflow genuinely requires a commit to proceed (e.g. a tool demands a clean working tree), stop and explain to the user, then wait for confirmation.
+
+### 5.2 Suggest a commit message at the end
+
+- After finishing a task that changes code, append a suggested commit message **before ending the reply**, for the user to use when committing themselves.
+- **Suggest only, never execute** — never feed it to `git commit` (§5.1 still applies).
+- **Never add an AI `Co-Authored-By:` trailer** (e.g. `Co-Authored-By: Claude …`) or any "Generated with …" attribution footer — not in the suggestion, and not in a real commit made under §5.1's explicit-permission exception. The commit is the user's alone (§0).
+- Conventional Commits format (`feat:` / `fix:` / `docs:` / `refactor:` / `chore:`, … — full type table in §2.3), with three hard constraints:
+  - **Exactly one line** — subject only; never a body, never footers.
+  - **No more than 50 characters for the whole line**, type prefix included (tighter than §2.2's subject-only cap — the prefix counts too).
+  - **Always in American English**, regardless of the conversation language.
+- Example output:
+
+  > Suggested commit message:
+  >
+  > ```text
+  > feat: add rate limiting to user login
+  > ```
+
+- If the task changed no files, skip the suggestion.
+
+### 5.3 Never call the `gh` CLI without permission
+
+- **Unless the user explicitly allows it, never invoke `gh` directly** — this applies to every subcommand: read-only ones (`gh pr view`, `gh run list`, `gh api`) just as much as mutating ones (`gh pr create`, `gh pr merge`, `gh release create`, `gh issue close`, `gh repo …`).
+- `gh` acts on GitHub with the user's credentials and touches team-visible resources (PRs, issues, releases, comments, repos) — treat every call as an outward-facing action, not a local one.
+- Only run a `gh` command when the user **explicitly allows it in the current task**, ideally naming the command or operation (e.g. "use `gh` to create the PR"). **Approval does not carry over between tasks.**
+- If a task needs GitHub data or actions (open a PR, check CI status), state which `gh` command you would run and wait for the user's go-ahead — or let them run it themselves — instead of calling `gh` on your own.

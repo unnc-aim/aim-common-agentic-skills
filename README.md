@@ -7,7 +7,7 @@
 推荐用开源的 [skills](https://github.com/vercel-labs/skills) CLI（`npx skills`）安装——它会自动识别你本地所有 agent，并把整个 skill 目录装好：
 
 ```bash
-# 安装单个 skill（全局，所有项目可用）
+# 安装单个 aim-common-rules skill（全局，所有项目可用）
 npx skills add unnc-aim/aim-common-agentic-skills --skill aim-common-rules -g
 
 # 查看仓库内所有可用 skill（不实际安装）
@@ -25,10 +25,12 @@ npx skills update
 
 UNNC AIM 战队的仓库命名、分支 / Conventional Commits、Python (autopep8 / PEP 8)、C++ (clang-format / clang-tidy)、TypeScript (Prettier / ESLint / pnpm)、Go (gofmt)、CMake 与 Markdown / YAML / JSON 通用风格规范，附带可直接拷贝的规则文件。Agent 会在创建 / 命名仓库、核对 ROS2 包名、写 commit message、格式化代码等场景自动调用。规范的原始文档位于 [unnc-aim/.github](https://github.com/unnc-aim/.github) `profile/`。
 
-**特性：**
+**Features：**
 
+- Git Regulation: 无论自己动手还是让 AI 代劳，干活这件事和每一个 commit 的主体都是你本人。AI 立的功、犯的错，一律记在使用 AI 的**你**的头上；提交前自查 diff，亲手提交；禁止把 AI 加为 Co-Author——责任归你，署名也只归你。
 - 仓库命名决策树（赛用 / 学年 / 可复用）+ 已知反例
 - 分支命名 + Conventional Commits 模板
+- Agent Git 行为规范：未经用户当次任务明确要求绝不 `git commit` / `git push`；未经明确许可绝不直接调用 `gh` CLI（含只读子命令）；禁止给 commit 添加 AI 的 `Co-Authored-By` 署名（即使被明确允许提交）；代码任务结束时自动建议单行 commit message（≤50 字符、美式英语），只建议、不执行
 - Python：autopep8 + isort + Pylance 配置（line length 79）
 - C++：`.clang-format` / `.clang-tidy` 模板
 - TypeScript：Prettier（2 空格）+ ESLint，包管理器 pnpm（特殊场景除外，模板齐全）
