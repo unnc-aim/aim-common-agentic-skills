@@ -10,6 +10,7 @@ Concretely:
 
 - **Review what the AI produced as if you had written it** — as far as the team is concerned, you did.
 - **Commit yourself, under your own name** — a commit is your personal endorsement of the change, which is exactly why agents must never commit or push for you (§5.1).
+- **Never credit the AI as a co-author.** No `Co-Authored-By:` trailer naming an AI (and no "Generated with …" attribution footer) on team commits — authorship and accountability run together, and both belong to you alone.
 
 ## 1. Branch naming
 
@@ -54,7 +55,7 @@ BREAKING CHANGE: Updated the user model to include an additional "authToken" fie
 | `<scope>` | no | affected module/scope, e.g. `user-auth`, `api`, `ui`; may be omitted |
 | `<subject>` | yes | short description, **<=50 chars**; imperative mood (`Add` not `Added`); **lowercase first letter**; **no trailing punctuation** |
 | `<body>` | no | detailed explanation, wrap each line at **<=72 chars**; cover why / how / context |
-| `<footer>` | no | `BREAKING CHANGE: ...` for breaking changes; `Closes #123` / `Refs #456` to reference issues |
+| `<footer>` | no | `BREAKING CHANGE: ...` for breaking changes; `Closes #123` / `Refs #456` to reference issues; **never a `Co-Authored-By:` trailer crediting an AI** (§0) |
 
 ### 2.3 type values
 
@@ -111,6 +112,7 @@ Rules for any AI agent (Claude Code / Cursor / Codex / …) working in a team re
 
 - After finishing a task that changes code, append a suggested commit message **before ending the reply**, for the user to use when committing themselves.
 - **Suggest only, never execute** — never feed it to `git commit` (§5.1 still applies).
+- **Never add an AI `Co-Authored-By:` trailer** (e.g. `Co-Authored-By: Claude …`) or any "Generated with …" attribution footer — not in the suggestion, and not in a real commit made under §5.1's explicit-permission exception. The commit is the user's alone (§0).
 - Conventional Commits format (`feat:` / `fix:` / `docs:` / `refactor:` / `chore:`, … — full type table in §2.3), with three hard constraints:
   - **Exactly one line** — subject only; never a body, never footers.
   - **No more than 50 characters for the whole line**, type prefix included (tighter than §2.2's subject-only cap — the prefix counts too).
