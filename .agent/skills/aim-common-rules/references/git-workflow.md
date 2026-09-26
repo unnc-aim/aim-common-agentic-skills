@@ -2,6 +2,15 @@
 
 > Source of truth: [`README.md` §1.3 / §1.4 / §1.7](https://github.com/unnc-aim/.github/blob/main/profile/README.md) in `unnc-aim/.github`.
 
+## 0. The committer is you — AI or not
+
+Team policy (defined in this repo): whether you do the work yourself or an AI agent does it for you, **the work itself — and every `git commit` — is yours**. Everything the AI you use achieves, and every mistake it makes, is attributed to **you, the one who used it**. Credit and blame both land on the same head: yours.
+
+Concretely:
+
+- **Review what the AI produced as if you had written it** — as far as the team is concerned, you did.
+- **Commit yourself, under your own name** — a commit is your personal endorsement of the change, which is exactly why agents must never commit or push for you (§5.1).
+
 ## 1. Branch naming
 
 - Branch names are **all lowercase**, words joined by **underscores `_`**.

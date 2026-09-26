@@ -61,6 +61,8 @@ Those written docs remain the source of truth; this skill (which lives in [`unnc
 
 **Agent rules:** never run `git commit` / `git push` unless the user explicitly asks in the current task, never call the `gh` CLI without explicit permission (any subcommand), and after any code-changing task suggest a commit message — one line, ≤50 chars including the type prefix, American English — instead of committing. Details: [references/git-workflow.md](references/git-workflow.md) §5.
 
+**The committer is you, AI or not:** credit for what your AI gets right and blame for what it gets wrong both land on you, the user — so review the diff and commit yourself. Policy: [references/git-workflow.md](references/git-workflow.md) §0.
+
 ## How members adopt this skill
 
 This skill lives in [`unnc-aim/aim-common-agentic-skills`](https://github.com/unnc-aim/aim-common-agentic-skills). Install it with the open [skills](https://github.com/vercel-labs/skills) CLI (`npx skills`), which auto-detects every local agent (Claude Code / Cursor / Codex / …) and installs the whole skill directory for all of them:
