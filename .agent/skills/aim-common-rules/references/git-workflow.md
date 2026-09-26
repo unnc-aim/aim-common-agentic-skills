@@ -82,3 +82,36 @@ One-time global setup for every member (written docs: `profile/README.md` §1.7)
 | `git config --global commit.verbose true` | commit editor shows the full diff → better Conventional Commits |
 
 Repo-level: copy [assets/.gitattributes](../assets/.gitattributes) to the repo root to normalize line endings across Windows / macOS / Linux (prevents CRLF noise in diffs).
+
+## 5. AI-agent git behavior
+
+Rules for any AI agent (Claude Code / Cursor / Codex / …) working in a team repo. They complement §1–§4 (the human workflow) and are defined in this repo rather than `profile/README.md`.
+
+### 5.1 Never commit / push by default
+
+- **Unless the user explicitly asks, never run or assist any `git commit` or `git push`.** This includes, but is not limited to:
+  - Running `git commit` / `git push` directly (including `--force`, `--tags`, and other variants);
+  - Running commands that auto-create commits on the user's behalf (e.g. scaffolding tools or package-manager init flows) without telling the user;
+  - Triggering commits indirectly through hooks such as husky or lint-staged.
+- Only execute when the user **explicitly asks in the current task** (e.g. "commit this", "commit and push").
+- **Approval does not carry over between tasks**: the user having asked for a commit in a previous task never means you may commit unprompted in the next one. Explicit instruction is required every time.
+- Read-only Git operations are unrestricted: `git status`, `git diff`, `git log`, `git branch`, `git show`, etc. can be used freely.
+- If a workflow genuinely requires a commit to proceed (e.g. a tool demands a clean working tree), stop and explain to the user, then wait for confirmation.
+
+### 5.2 Suggest a commit message at the end
+
+- After finishing a task that changes code, append a suggested commit message **before ending the reply**, for the user to use when committing themselves.
+- **Suggest only, never execute** — never feed it to `git commit` (§5.1 still applies).
+- Conventional Commits format (`feat:` / `fix:` / `docs:` / `refactor:` / `chore:`, … — full type table in §2.3), with three hard constraints:
+  - **Exactly one line** — subject only; never a body, never footers.
+  - **No more than 50 characters for the whole line**, type prefix included (tighter than §2.2's subject-only cap — the prefix counts too).
+  - **Always in American English**, regardless of the conversation language.
+- Example output:
+
+  > Suggested commit message:
+  >
+  > ```text
+  > feat: add rate limiting to user login
+  > ```
+
+- If the task changed no files, skip the suggestion.

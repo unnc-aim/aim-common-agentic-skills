@@ -29,6 +29,7 @@ UNNC AIM 战队的仓库命名、分支 / Conventional Commits、Python (autopep
 
 - 仓库命名决策树（赛用 / 学年 / 可复用）+ 已知反例
 - 分支命名 + Conventional Commits 模板
+- Agent Git 行为规范：未经用户当次任务明确要求绝不 `git commit` / `git push`；代码任务结束时自动建议单行 commit message（≤50 字符、美式英语），只建议、不执行
 - Python：autopep8 + isort + Pylance 配置（line length 79）
 - C++：`.clang-format` / `.clang-tidy` 模板
 - TypeScript：Prettier（2 空格）+ ESLint，包管理器 pnpm（特殊场景除外，模板齐全）
