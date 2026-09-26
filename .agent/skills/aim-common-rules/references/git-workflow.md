@@ -115,3 +115,10 @@ Rules for any AI agent (Claude Code / Cursor / Codex / …) working in a team re
   > ```
 
 - If the task changed no files, skip the suggestion.
+
+### 5.3 Never call the `gh` CLI without permission
+
+- **Unless the user explicitly allows it, never invoke `gh` directly** — this applies to every subcommand: read-only ones (`gh pr view`, `gh run list`, `gh api`) just as much as mutating ones (`gh pr create`, `gh pr merge`, `gh release create`, `gh issue close`, `gh repo …`).
+- `gh` acts on GitHub with the user's credentials and touches team-visible resources (PRs, issues, releases, comments, repos) — treat every call as an outward-facing action, not a local one.
+- Only run a `gh` command when the user **explicitly allows it in the current task**, ideally naming the command or operation (e.g. "use `gh` to create the PR"). **Approval does not carry over between tasks.**
+- If a task needs GitHub data or actions (open a PR, check CI status), state which `gh` command you would run and wait for the user's go-ahead — or let them run it themselves — instead of calling `gh` on your own.
