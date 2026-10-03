@@ -87,6 +87,7 @@ One-time global setup for every member (written docs: `profile/README.md` §1.7)
 | Command | Purpose |
 | --- | --- |
 | `git config --global pull.rebase true` | `git pull` rebases by default → linear history |
+| `git config --global rebase.autoStash true` | a dirty worktree no longer blocks a rebase-based `git pull` — uncommitted changes are stashed and restored automatically |
 | `git config --global init.defaultBranch main` | new repos start on `main` (never `master`) |
 | `git config --global push.autoSetupRemote true` | first `git push` on a new branch just works — no `-u` needed (git >= 2.37) |
 | `git config --global commit.verbose true` | commit editor shows the full diff → better Conventional Commits |
