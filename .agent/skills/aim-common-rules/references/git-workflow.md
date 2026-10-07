@@ -128,9 +128,10 @@ Rules for any AI agent (Claude Code / Cursor / Codex / …) working in a team re
 
 - If the task changed no files, skip the suggestion.
 
-### 5.3 Never call the `gh` CLI without permission
+### 5.3 `gh` writes need explicit permission — reads are free
 
-- **Unless the user explicitly allows it, never invoke `gh` directly** — this applies to every subcommand: read-only ones (`gh pr view`, `gh run list`, `gh api`) just as much as mutating ones (`gh pr create`, `gh pr merge`, `gh release create`, `gh issue close`, `gh repo …`).
-- `gh` acts on GitHub with the user's credentials and touches team-visible resources (PRs, issues, releases, comments, repos) — treat every call as an outward-facing action, not a local one.
-- Only run a `gh` command when the user **explicitly allows it in the current task**, ideally naming the command or operation (e.g. "use `gh` to create the PR"). **Approval does not carry over between tasks.**
-- If a task needs GitHub data or actions (open a PR, check CI status), state which `gh` command you would run and wait for the user's go-ahead — or let them run it themselves — instead of calling `gh` on your own.
+- **Read-only `gh` commands are unrestricted** — same standing as read-only git (§5.1): `gh pr list / view / diff / checks`, `gh issue list / view`, `gh run list / view / watch`, `gh repo view / list`, `gh release list / view / download`, `gh search …`, `gh auth status`, and GET requests via `gh api`.
+- **Never run a write-effect `gh` command unless the user explicitly allows it in the current task.** That is every command (or `gh api` call) that creates or changes anything on GitHub: `gh pr create / merge / close / edit / review / comment`, `gh issue create / close / edit`, `gh release create / delete / edit`, `gh repo create / delete / edit`, `gh run rerun / cancel`, `gh workflow run / enable / disable`, `gh secret set`, `gh label create / delete`, `gh gist create / edit`, and `gh api --method POST / PATCH / PUT / DELETE` (or any GraphQL mutation).
+- Writes act on GitHub with the user's credentials and change team-visible resources (PRs, issues, releases, comments, repos) — treat each as an outward-facing action, not a local edit.
+- **Approval does not carry over between tasks**; when unsure whether a command writes, ask instead of running it.
+- If a task needs a GitHub write (open a PR, publish a release), state which `gh` command you would run — ideally the user names it (e.g. "use `gh` to create the PR") — and wait for the go-ahead, or let them run it themselves.
